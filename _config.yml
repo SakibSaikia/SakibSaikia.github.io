@@ -13,14 +13,14 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Orthonormal
+title: Perspective Divide
 email: sakib.r.saikia@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Memory dump of of things related to graphics and gamedev.
+  Memory dump of all things related to graphics and gamedev. 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: sakibsaikia
-github_username:  SakibSaikia
+#github_username:  SakibSaikia
 
 # Build settings
 markdown: kramdown
