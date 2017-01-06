@@ -155,7 +155,7 @@ float CameraFacingReflectionAttenuation = 1 - smoothstep(0.25, 0.5, dot(-CameraV
 		return;
 ```
 
-#### Reflections Outsite the Viewport
+#### Reflections Outside the Viewport
 Similar to above, any rays that march outside the screen viewport will not have any valid pixel information. These need to be dropped too.
 
 ``` glsl
