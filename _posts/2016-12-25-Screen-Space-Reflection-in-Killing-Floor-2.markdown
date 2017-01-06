@@ -211,11 +211,36 @@ float3 RaySample = ScreenSpacePos.xyz + DitherOffset * ScreenSpaceReflectionVec;
 ```
 
 ### Optimization
-Also, a naive implementation is quite slow as progressive ray marching can result in a ton of texture lookups.
+A naive implementation is quite slow as progressive ray marching can result in a ton of texture lookups. Enter the Hi-Z buffer.
+
+A Hi-Z buffer (or HZB) is computed by taking the min on each 4x4 tile of the depth buffer and storing it in the next mip level. We stop when the mip resolution falls below 8x8. The following images show the 6 highest mips of a HZB.
+
+|![img7](/images/HZB1.png) |![img8](/images/HZB2.png) |
+|![img9](/images/HZB3.png) |![img10](/images/HZB4.png)|
+|![img11](/images/HZB5.png)|![img12](/images/HZB6.png)|
+
+Here is the code snippet.
+
+``` glsl
+[numthreads(WARP_SIZE, GROUP_SIZE, 1)]
+void DownsampleCS(uint3 DispatchId : SV_DispatchThreadID)
+{
+	float Depth0 = DepthTexIn[2 * DispatchId.xy];
+	float Depth1 = DepthTexIn[2 * DispatchId.xy + uint2(1, 0)];
+	float Depth2 = DepthTexIn[2 * DispatchId.xy + uint2(1, 1)];
+	float Depth3 = DepthTexIn[2 * DispatchId.xy + uint2(0, 1)];
+
+	DepthTexOut[DispatchId.xy] = min(min(Depth0, Depth1), min(Depth2, Depth3));
+}
+```
+
+The HZB is used to quickly converge on the ray intersection by skipping empty space in the world. The following series of images taken from SIGGRAPH 2015 Real Time Rendering course by Tomasz Stachowiak [^fn4] best illustrates how HZB ray marching works.
+
+![img13](/images/HZB-Raymarch.gif)
 
 # References
 
 [^fn1]: "Hi-Z Screen-Space Cone-Traced Reflections", Yasin Uludag, GPU Pro 5
 [^fn2]: [Screen Space Ray Tracing](http://casual-effects.blogspot.com/2014/08/screen-space-ray-tracing.html)
 [^fn3]: [The Future of Screen Space Reflections](https://bartwronski.com/2014/01/25/the-future-of-screenspace-reflections/)
-[jekyll-talk]: https://talk.jekyllrb.com/
+[^fn4]: [Stochastic Screen-Space Reflections](http://www.frostbite.com/2015/08/stochastic-screen-space-reflections/)
