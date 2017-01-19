@@ -210,7 +210,7 @@ float DitherOffset = DitherTexture.SampleLevel(InUV * DitherTilingFactor, 0).r *
 float3 RaySample = ScreenSpacePos.xyz + DitherOffset * ScreenSpaceReflectionVec;
 ```
 
-### Optimization
+### HZB Optimization
 A naive implementation is quite slow as progressive ray marching can result in a ton of texture lookups. Enter the Hi-Z buffer.
 
 A Hi-Z buffer (or HZB) is computed by taking the min on each 4x4 tile of the depth buffer and storing it in the next mip level. We stop when the mip resolution falls below 8x8. The following images show the 6 highest mips of a HZB.
