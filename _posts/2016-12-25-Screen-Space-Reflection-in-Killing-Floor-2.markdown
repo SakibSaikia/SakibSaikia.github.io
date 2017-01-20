@@ -190,7 +190,8 @@ float DirectionBasedAttenuation = smoothstep(-0.17, 0.0, dot(ReflectionNormal.xy
 Unless the world is rendered first without a foreground pass (first person weapon), there will be missing information for all the world pixels that the foreground occludes. These will need to be masked and handled appropriately.
 
 ``` glsl
-// Attenuate any reflection color from the foreground. The GBuffer normal color for foreground objects is (0,0,1)
+// Attenuate any reflection color from the foreground. 
+// The GBuffer normal color for foreground objects is (0,0,1).
 float ForegroundAttenuation = step(0.0001f, ReflectionNormalColor.r * ReflectionNormalColor.g);
 ```
 
@@ -237,6 +238,8 @@ void DownsampleCS(uint3 DispatchId : SV_DispatchThreadID)
 The HZB is used to quickly converge on the ray intersection by skipping empty space in the world. The following series of images taken from SIGGRAPH 2015 Real Time Rendering course by Tomasz Stachowiak [^fn4] best illustrates how HZB ray marching works.
 
 ![img13](/images/HZB-Raymarch.gif)
+
+(.. to be continued)
 
 # References
 

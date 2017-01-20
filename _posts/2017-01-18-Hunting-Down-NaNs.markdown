@@ -54,7 +54,9 @@ mul oC0.xyw, r0.xyzx, c1.xxzy
 
 Turns out there is a good reason for that - you can compute an approximate inverse quare root much faster than an actual square root. See [^fn1] and [^fn2]. 
 
-Additionally, SM3 takes the absolute value of the argument [^fn3] before computing `rsq()` which swallows up any NaNs resulting from when the argument is negative.
+Additionally, SM3 takes the absolute value of the argument [^fn3] before computing `rsq()` which swallows up any NaNs resulting from when the argument is negative. 
+
+Note that the dot product of two normalized vectors *can* be greater than 1.0 due to floating point inaccuracy. So, `sqrt( 1.f - dot(A,B))` can produce NaNs even if **A** and **B** are normalized. Use `sqrt(1.f - saturate(dot(A,B)))` instead.
 
 Another source of NaN I ran into was `pow()`, which is used all over the place in lighting code. Take this program as an example.
 
