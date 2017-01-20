@@ -25,6 +25,9 @@ twitter_username: sakibsaikia
 # Google services
 google_analytics: UA-90618120-1
 
+disqus:
+    shortname: sakibsaikia
+
 # Build settings
 markdown: kramdown
 theme: minima
