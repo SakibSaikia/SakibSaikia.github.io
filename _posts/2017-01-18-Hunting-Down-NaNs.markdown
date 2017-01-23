@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Hunting Down NaNs in Shader Code"
+title:  "Tracking Down NaNs in Shader Code"
 date:   2017-01-18 22:18:46 -0500
 ---
 
