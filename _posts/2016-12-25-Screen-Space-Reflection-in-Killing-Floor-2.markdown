@@ -12,7 +12,7 @@ This is a summary of the Screen Space Reflections implementation used in Killing
 {:toc}
 
 ### Overview
-The basic algoritm is quite simple at heart. See sections 4.1-4.3 of Yasin Uludag's article in GPU Pro 5 [^fn1] for a great introduction on this technique. 
+The basic algoritm is quite simple at heart - you take the view vector per pixel, reflect it about the normal and ray march along the reflected vector until you get an intersection with the depth buffer. The scene color corresponding to the intersection UV is the reflected color. See sections 4.1-4.3 of Yasin Uludag's article in GPU Pro 5 [^fn1] for a great introduction on this technique. 
 
 The following code snippet shows the main entry point which computes the parameters required for raymarching.
 
@@ -239,7 +239,99 @@ The HZB is used to quickly converge on the ray intersection by skipping empty sp
 
 ![img13](/images/HZB-Raymarch.gif)
 
-(.. to be continued)
+The following code shows the HZB accelerated ray marching. A max iteration count can be used to bail out if something goes wrong and the HZB ray march does not converge.
+
+``` glsl
+int MipLevel = 0;
+while (	MipLevel > -1 && MipLevel < (NumDepthMips - 1))
+{
+	// Cross a single texel in the HZB for the current MipLevel
+	StepThroughCell(RaySample, ScreenSpaceReflectionVec, MipLevel);
+
+	// Constrain raymarch UV to (0-1) range with a flalloff
+	UVSamplingAttenuation = smoothstep(0.05, 0.1, RaySample.xy) * (1.f-smoothstep(0.95, 1, RaySample.xy));
+
+	if (any(UVSamplingAttenuation))
+	{
+		float ZBufferValue = DepthBuffer.SampleLevel(RaySample.xy, MipLevel).r; 
+
+		if (RaySample.z < ZBufferValue)
+		{
+			// If we did not intersect, perform successive test on the next
+			// higher mip level (and thus take larger steps)
+			MipLevel++;
+		}
+		else
+		{
+			// If we intersected, pull back the ray to the point of intersection (for that miplevel)
+			float t = (RaySample.z - ZBufferValue) / ScreenSpaceReflectionVec.z;
+			RaySample -= ScreenSpaceReflectionVec * t;
+
+			// And, then perform successive test on the next lower mip level.
+			// Once we've got a valid intersection with mip 0, we've found our intersection point
+			MipLevel--;
+		}
+	}
+	else
+	{
+		break;
+	}
+}
+```
+
+Given below is the code to step across a single texel of the HZB.
+
+``` glsl
+// Constant offset to make sure you cross to the next cell
+#define CELL_STEP_OFFSET 0.05
+
+void StepThroughCell(inout float3 RaySample, float3 RayDir, int MipLevel)
+{
+	// Size of current mip 
+	int2 MipSize = int2(BufferSize) >> MipLevel;
+
+	// UV converted to index in the mip
+	float2 MipCellIndex = RaySample.xy * float2(MipSize);
+
+	//
+	// Find the cell boundary UV based on the direction of the ray
+	// Take floor() or ceil() depending on the sign of RayDir.xy
+	//
+	float2 BoundaryUV;
+	BoundaryUV.x = RayDir.x > 0 ? ceil(MipCellIndex.x) / float(MipSize.x) : 
+		floor(MipCellIndex.x) / float(MipSize.x);
+	BoundaryUV.y = RayDir.y > 0 ? ceil(MipCellIndex.y) / float(MipSize.y) : 
+		floor(MipCellIndex.y) / float(MipSize.y);
+
+	//
+	// We can now represent the cell boundary as being formed by the intersection of 
+	// two lines which can be represented by 
+	//
+	// x = BoundaryUV.x
+	// y = BoundaryUV.y
+	//
+	// Intersect the parametric equation of the Ray with each of these lines
+	//
+	float2 t;
+	t.x = (BoundaryUV.x - RaySample.x) / RayDir.x;
+	t.y = (BoundaryUV.y - RaySample.y) / RayDir.y;
+
+	// Pick the cell intersection that is closer, and march to that cell
+	if (abs(t.x) < abs(t.y))
+	{
+		RaySample += (t.x + CELL_STEP_OFFSET) * RayDir;
+	}
+	else
+	{
+		RaySample += (t.y + CELL_STEP_OFFSET) * RayDir;
+	}
+}
+```
+
+### Final Thoughts
+The HZB optimization allowed us to run SSR at full res (1080p) in ~2.5ms on current gen console and comparabe PC hardware. The HZB generation itselft took ~0.5ms. The SSR shader was run using async compute right after the G-buffer pass (and before lighting), since the color lookup was [decoupled from it](Screen-Space-Reflection-in-Killing-Floor-2.html#deferred-color-lookup). 
+
+Going forward, having a coarse SSR pass precdeing the HZB raymarching that can reject tiles we don't want to perform ray marching on might be beneficial. I plan to do another post later with more detailed perf analysis.
 
 # References
 
