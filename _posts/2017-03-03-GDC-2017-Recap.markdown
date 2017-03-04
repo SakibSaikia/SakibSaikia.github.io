@@ -3,22 +3,22 @@ layout: 	post
 title:  	"GDC 2017 Recap"
 date:   	2017-03-03 21:57:46 -0500
 category: 	"Conference"
-published:	true
+published:	false
 ---
 
 I was lucky enough to be able to visit GDC this year. As always, there were a lot of interesting talks, ideas and announcements to come out of it. I wasn't able to go to each one of these, but wanted to do a quick info dump of the ones I was able to attend. Quick disclaimer that this post isn't meant to be comprehensive (I'm only covering rendering/GPU/engine talks and I might have also very well missed something, in which case please point me to it), and it might also be subjective to an extent (I might be wrong, in which case please correct me :)). Also, Krzysztof Narkowicz is collating a list of presentation slides which you can find on his blog [here](https://knarkowicz.wordpress.com/2017/03/01/gdc-2017-presentations/). I'll will update this article with links to the presentations as and when they become available.
 
-### Day 1
+### Day 1 (Feb 27)
 
 The first day of the conference was Low-level API day with D3D12 and Vulkan being the main focus. The talks included.
 
-* **"D3D12 and Vulkan Done Right" & "Wave Programming in D3D12 and Vulkan** - Holger Gruen(NVIDIA), David Lively (AMD), Gareth Thomas (AMD)
-* **How to Thrive on the Bleeding Edge Whilst Avoiding Death by 1,000 Paper Cuts** - Jurjen Katsman (Nixxes)
-* **"Async Compute: Deep Dive" & "Raster Ordered Views and Conservative Rasterization** - Alex Dunn (NVIDIA), Stephan Hodes (AMD), Evgeny Makarov (NVIDIA), Rahul Sathe (NVIDIA)
-* **Moving to DirectX 12: Lessons Learned** - Tiago Rodrigues (Ubisoft Montreal)
-* **"Cinematic Depth of Field" & "Advanced Particle Simulation in Compute"** - Richard Tonge (NVIDIA), Hammad Mazhar (NVIDIA), Karl Hillesland (AMD)
+* *"D3D12 and Vulkan Done Right" & "Wave Programming in D3D12 and Vulkan* - Holger Gruen(NVIDIA), David Lively (AMD), Gareth Thomas (AMD)
+* *How to Thrive on the Bleeding Edge Whilst Avoiding Death by 1,000 Paper Cuts* - Jurjen Katsman (Nixxes)
+* *"Async Compute: Deep Dive" & "Raster Ordered Views and Conservative Rasterization* - Alex Dunn (NVIDIA), Stephan Hodes (AMD), Evgeny Makarov (NVIDIA), Rahul Sathe (NVIDIA)
+* *Moving to DirectX 12: Lessons Learned* - Tiago Rodrigues (Ubisoft Montreal)
+* *"Cinematic Depth of Field" & "Advanced Particle Simulation in Compute"* - Richard Tonge (NVIDIA), Hammad Mazhar (NVIDIA), Karl Hillesland (AMD)
 
-The common theme was how to do resource barriers correctly, inspect and avoid memory overcommitment, and how to best deal with pipelines states (PSOs). Yuriy O'Donnel had an excellect talk on how to perform resource transitions and manage residency programmatically in Frostibe using FRAMEGRAPH. 
+The common theme was how to do resource barriers correctly, inspect and avoid memory overcommitment, and how to best deal with pipelines states (PSOs). Yuriy O'Donnel had an [excellect talk](http://www.frostbite.com/2017/03/framegraph-extensible-rendering-architecture-in-frostbite/) on how to perform resource transitions and manage residency programmatically in Frostibe using FRAMEGRAPH. 
 
 [Wave Programming](https://msdn.microsoft.com/en-us/library/windows/desktop/mt733232(v=vs.85).aspx) in SM6 "enable the elimination of barrier constructs when the scope of synchronization is within the width of the SIMD processor, or some other set of threads that are known to be atomic relative to each other." This allows for fast *parallel reduction*. Wave programming also allows one to *query* Helper Lanes (used for pixel quad gradients) which was previously abstracted away. Using *wave voting* schemes such as `WaveAllTrue()` allows one to choose optimal code path for divergent vs. non-divergent control flow.
 
@@ -26,9 +26,45 @@ Early adopters of DX12 explained some of the growing pains with it, although the
 
 For Async Compute, it is important to ensure proper work pairing (using fences). One needs to be aware of *async tax* when running workloads in this mode. It is best to maintain non-async code paths and profile rather than just fire-and-forget. Since async compute is like CPU HyperThreading (multiple threads sharing same H/W resource), it is important to monitor resource contention. Other than monitoring register pressure, one also needs to monitor cache trashing. One option suggested was to use dummy LDS to reduce occupancy so as to reduce cache trashing ¯\\_(ツ)\_/¯ Personally, I would love to see that information exposed to profiling tools.
 
-Rahul Sathe (NVIDIA) talked about using programmable sample locations and conservative raterization. Using conservative rasterization violates the uniqueness of the [top-left rule](https://msdn.microsoft.com/en-us/library/windows/desktop/cc627092(v=vs.85).aspx) which "ensures that adjacent triangles are drawn once". This can cause flickering artifacts as writes for overlapping pixel shader invocations is unordered (“overlapping” is defined as invocations that are generated by the same draw calls and share the same pixel coordinate when in pixel-frequency execution mode, and the same pixel and sample coordinate in sample-frequency mode.) [Raster Order Views](https://msdn.microsoft.com/en-us/library/windows/desktop/dn914601(v=vs.85).aspx) are like UAVs but they ensure that pixel shader invocations are executed in the order in which the geometry is submitted. Pairing ROVs with conservative rasterization fixes the temporal instability.
+Rahul Sathe (NVIDIA) talked about using programmable sample locations and conservative raterization. Using conservative rasterization violates the uniqueness of the [top-left rule](https://msdn.microsoft.com/en-us/library/windows/desktop/cc627092(v=vs.85).aspx) of rasterization which "ensures that adjacent triangles are drawn once". This can cause flickering artifacts as writes for overlapping pixel shader invocations is unordered (“overlapping” is defined as invocations that are generated by the same draw calls and share the same pixel coordinate when in pixel-frequency execution mode, and the same pixel and sample coordinate in sample-frequency mode.) This flickering can also come from a single triangle that gets clipped outside the guard band, and produces multiple adjacent triangles. [Raster Order Views](https://msdn.microsoft.com/en-us/library/windows/desktop/dn914601(v=vs.85).aspx) are like UAVs but they ensure that pixel shader invocations are executed in the order in which the geometry is submitted. Pairing ROVs with conservative rasterization fixes the temporal instability.
 
-The *Cinematic Depth of Field* talk proposed using a scatter-based approach for constant time variable width blur called [**Fast Filter Spreading**](https://www2.eecs.berkeley.edu/Pubs/TechRpts/2009/EECS-2009-54.pdf) which is like reverse-[Summed Area Tables](https://en.wikipedia.org/wiki/Summed_area_table) in spirit. Unlike SATs this can be extended to perform a Bartlett filter (tent filter) rather than a simple box filter. Also, unlike SATs which have a precision meltdown at higher resolutions, this technique is resolution independent and has a fixed cost, although that cost is quite high.
+The *Cinematic Depth of Field* talk proposed using a scatter-based approach for constant time variable width blur called [*Fast Filter Spreading*](https://www2.eecs.berkeley.edu/Pubs/TechRpts/2009/EECS-2009-54.pdf) which is like reverse-[Summed Area Tables](https://en.wikipedia.org/wiki/Summed_area_table) in spirit. Unlike SATs this can be extended to perform a Bartlett filter (tent filter) rather than a simple box filter. Also, unlike SATs which have a precision meltdown at higher resolutions, this technique is resolution independent and has a fixed cost, although that cost is quite high. The [SPH](https://en.wikipedia.org/wiki/Smoothed-particle_hydrodynamics) based particle simulation system was also discussed.
+
+
+### Day 2 (Feb 28)
+
+* *The Future of Rendering in Unity* - Tim Cooper (Unity)
+* *Toward Film-Like Pixel Quality in Real-Time Games* - Hao Chen (Amazon)
+* *From DCC to Pixels in Seconds: Rapid and Continuous Iteration in Lumberyard* - Nicholas Lawson 
+* [*AMD Capsaicin & Cream*](https://www.youtube.com/watch?v=ZVKDNeyfpAo)
+* [*NVidia Event*](http://www.nvidia.com/object/gdc-2017.html) 
+
+The new C# based scriptable render pipeline in Unity was demonstrated. Aras Pranckevičius had a similar talk at the AMD Capsaicin & Cream event, the slides for which can be found [here](http://aras-p.info/texts/files/2017_GDC_UnityScriptableRenderPipeline.pdf)
+
+Amazon Lumberyard had a big presence on this day. Hao Chen demonstrated Lumberyard's commitment to image quality. His talk was an in-depth primer on different [types of aliasing](https://www.beyond3d.com/content/articles/122/3) artifacts that make games fall short of cinematics, such as [shader aliasing](https://blogs.msdn.microsoft.com/shawnhar/2011/10/31/shader-aliasing/), [specular aliasing](http://blog.selfshadow.com/2011/07/22/specular-showdown/) and [temporal aliasing](https://de45xmedrsdbp.cloudfront.net/Resources/files/TemporalAA_small-59732822.pdf).
+
+Nicholas Lawson's talk described a content workflow in Lumberyard that can be best described as *continuous integration for content*. There is an AssetProcessor service that runs in the background, and monitors your game content directories for changes made. When it detects changes, it will trigger any import/crunch steps required to bring it in game, and will even live update any instances of the asset in game while it is running. Very cool stuff!
+
+AMD's Capsaicin & Cream event announced the Radeon Rx Vega GPU based on [Vega Architecture](https://www.techpowerup.com/reviews/AMD/Radeon_Vega_GPU_Architecture/3.html). The new NCUs in the Vega will have support for Rapid Packed Math (RPM) which can be used to speed up FP16 calculations. The event also hosted talks from industry professionals such as 
+
+* [*Scriptable Render Pipeline, Future of Rendering in Unity*](http://aras-p.info/texts/files/2017_GDC_UnityScriptableRenderPipeline.pdf)  – Aras Pranckevičius (Unity)
+* [*Improving Texture Compression in Games*](https://docs.google.com/presentation/d/1LUPrvdjqFP5nGxe_SF_eQHB6mPbkBOb7w8qgSyQR0Uc/edit#slide=id.p) – Stephanie Hurlburt (Binomial)
+
+The Nvidia event announced the 1080 Ti and the availability of [Gameworks for DX12](https://developer.nvidia.com/gameworks-dx12-released-gdc). This was also the first time Nvidia acknowledged the use of [Tiled Caching](https://www.techpowerup.com/231129/on-nvidias-tile-based-rendering) on Pascal which [started with Maxwell](http://www.anandtech.com/show/10536/nvidia-maxwell-tile-rasterization-analysis). 
+
+
+### Day 3 (March 1)
+
+* [*Cold, Hard Cache: Insomniac's Cache Simulator*](https://deplinenoise.files.wordpress.com/2017/03/cachesimstyled.pdf) - Andreas Fredriksson (Insomniac Games)
+* *Advanced Shader Programming on GCN* - Timothy Lottes (AMD)
+* *Real-Time Rendering for Feature Film: Rogue One, a Case Study* - John Knoll (Industrial Light & Magic), Naty Hoffman (ILMxLAB), Roger Cordes (ILMxLAB)
+* [*State of Unreal*](https://www.youtube.com/watch?v=K6tRt7c2elU)
+
+The CacheSim talk by Andreas Fredriksson was one of the most 
+
+
+
+
 
 
 
