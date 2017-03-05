@@ -86,6 +86,12 @@ The award for the most amount of math crammed into a presenation probably goes t
 
 And that's it. I wasn't there on Day 5 and had to miss out on some interesting talks including the 4K Checkerboard talk by Graham Wihlidal. I'll add links to other talks of interest as slides become available. Once again, if you are looking for a more comprehensive list of talks you can find them [here](https://knarkowicz.wordpress.com/2017/03/01/gdc-2017-presentations/).
 
+(Update)
+
+Additional presentations:
+
+* [*4K Checkerboard in Battlefield 1 and Mass Effect Andromeda*](http://www.frostbite.com/2017/03/4k-checkerboard-in-battlefield-1-and-mass-effect-andromeda/) - Graham Wihlidal (Frostbite Labs)
+
 
 
 
