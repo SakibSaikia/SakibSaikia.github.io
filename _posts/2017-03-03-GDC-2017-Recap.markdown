@@ -3,10 +3,10 @@ layout: 	post
 title:  	"GDC 2017 Recap"
 date:   	2017-03-03 21:57:46 -0500
 category: 	"Conference"
-published:	false
+published:	true
 ---
 
-I was lucky enough to be able to visit GDC this year. As always, there were a lot of interesting talks, ideas and announcements to come out of it. I wasn't able to go to each one of these, but wanted to do a quick info dump of the ones I was able to attend. Quick disclaimer that this post isn't meant to be comprehensive (I'm only covering rendering/GPU/engine talks and I might have also very well missed something, in which case please point me to it), and it might also be subjective to an extent (I might be wrong, in which case please correct me :)). Also, Krzysztof Narkowicz is collating a list of presentation slides which you can find on his blog [here](https://knarkowicz.wordpress.com/2017/03/01/gdc-2017-presentations/). I'll will update this article with links to the presentations as and when they become available.
+I was lucky enough to be able to visit GDC this year. As always, there were a lot of interesting talks, ideas and announcements to come out of it. I wasn't able to go to each one of these, but wanted to do a quick info dump of the ones I was able to attend. Quick disclaimer that this post isn't meant to be comprehensive (I'm only covering rendering/GPU/engine talks that I was able to attend), and some of my comments might be subjective to an extent (I might be wrong, in which case please correct me :)). Also, Krzysztof Narkowicz is collating a list of presentation slides which you can find on his blog [here](https://knarkowicz.wordpress.com/2017/03/01/gdc-2017-presentations/). I'll will update this article with links to the presentations as and when they become available.
 
 ### Day 1 (Feb 27)
 
@@ -38,6 +38,7 @@ The *Cinematic Depth of Field* talk proposed using a scatter-based approach for 
 * *From DCC to Pixels in Seconds: Rapid and Continuous Iteration in Lumberyard* - Nicholas Lawson 
 * [*AMD Capsaicin & Cream*](https://www.youtube.com/watch?v=ZVKDNeyfpAo)
 * [*NVidia Event*](http://www.nvidia.com/object/gdc-2017.html) 
+* [*Unity Keynote*](https://www.youtube.com/watch?v=YHweZ8dhOJA)
 
 The new C# based scriptable render pipeline in Unity was demonstrated. Aras Pranckevičius had a similar talk at the AMD Capsaicin & Cream event, the slides for which can be found [here](http://aras-p.info/texts/files/2017_GDC_UnityScriptableRenderPipeline.pdf)
 
@@ -60,7 +61,44 @@ The Nvidia event announced the 1080 Ti and the availability of [Gameworks for DX
 * *Real-Time Rendering for Feature Film: Rogue One, a Case Study* - John Knoll (Industrial Light & Magic), Naty Hoffman (ILMxLAB), Roger Cordes (ILMxLAB)
 * [*State of Unreal*](https://www.youtube.com/watch?v=K6tRt7c2elU)
 
-The CacheSim talk by Andreas Fredriksson was one of the most 
+The CacheSim talk by Andreas Fredriksson was clearly a hit! He showed how he used the Trap Flag of the EFLAGS register to simulate and report cache misses for the AMD Jaguar CPU. The source code is available at [GitHub](https://github.com/insomniacgames/ig-cachesim).
+
+Timothy's GCN talk demonstrated the use of packed math to get performance speedups among other things.
+
+One of the coolest things for me was the use of Unreal's realtime rendering in [BLACKBIRD](http://www.polygon.com/2017/3/1/14779608/blackbird-ar-epic). Also, check out this awesome short film created by the same guys - "The Human Race".
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MQ3QuZtrxl0" frameborder="0" allowfullscreen></iframe>
+
+It was also encouraging to see the [Rogue One shots that were composed using Unreal Engine 4](https://youtu.be/K6tRt7c2elU?t=14m52s). It goes to show that realtime rendering is coming of age. Exciting times! Also, congrats to [Tim Sweeney on the Lifetime Achievement Award](https://www.twitch.tv/videos/125754127?t=01h38m31s).
+
+
+### Day 4 (March 2)
+
+* *NVIDIA Aftermath: A New Way of Debugging Crashes on the GPU* - Alex Dunn (NVIDIA)
+* [*FrameGraph: Extensible Rendering Architecture in Frostbite*](http://www.frostbite.com/2017/03/framegraph-extensible-rendering-architecture-in-frostbite/) - Yuriy O'Donnell (Frostbite)
+* *PBR Diffuse Lighting for GGX+Smith Microsurfaces* - Earl Hammon, Jr. (Respawn Entertainment)
+
+[NVidia Aftermath](https://developer.nvidia.com/nvidia-aftermath) is a post-mortem GPU crash analysis tool. It is sufficiently light weight and can be shipped with the game to examine GPU crashes in the wild. Its unobtrusive nature can help catch [Heisenbugs](https://en.wikipedia.org/wiki/Heisenbug) which validation and debug layers may fail to catch.
+
+Yuriy O'Donnel demonstrated the use of FRAMEGRAPH in the Frostbite engine. Render passes are annoted to create a high-level representation (DAG) of the frame, which is used to simplify resource management, better/automatic async compute pairing and simplified barriers. FRAMEGRAPH + Memory Aliasing is used to get ~50% savings in render target memory and to maintain full utilization of ESRAM on XB1.
+
+The award for the most amount of math crammed into a presenation probably goes to Earl Hammon, Jr. and his talk on *PBR Diffuse Lighting for GGX+Smith Microsurfaces*, but it was easily one of my favorite talks at GDC this year. He goes over the microfactet BRDF normalization derivation, and then works out his solution for energy conserving diffuse for GGX+Smith specular. He demonstrated how to interpret [BRDF slices](https://disney-animation.s3.amazonaws.com/library/s2012_pbs_disney_brdf_notes_v2.pdf). He also showed how to use trigonometric identities to compute NdotH and LdotH without ever computing the half-vector H (and thereby saving cycles).
+
+And that's it. I wasn't there on Day 5 and had to miss out on some interesting talks including the 4K Checkerboard talk by Graham Wihlidal. I'll add links to other talks of interest as slides become available. Once again, if you are looking for a more comprehensive list of talks you can find them [here](https://knarkowicz.wordpress.com/2017/03/01/gdc-2017-presentations/).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
