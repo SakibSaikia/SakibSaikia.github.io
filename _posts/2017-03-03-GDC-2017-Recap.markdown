@@ -92,7 +92,7 @@ Additional presentations:
 
 * [*4K Checkerboard in Battlefield 1 and Mass Effect Andromeda*](http://www.frostbite.com/2017/03/4k-checkerboard-in-battlefield-1-and-mass-effect-andromeda/) - Graham Wihlidal (Frostbite Labs)
 * [*Irradiance & Light field Probes with Visibility*](http://graphics.cs.williams.edu/papers/LightFieldI3D17/McGuire2017LightField-GDCSlides.pdf) - Morgan McGuire
-
+* [*High Dynamic Range color grading and display in Frostbite*](http://www.frostbite.com/2017/03/high-dynamic-range-color-grading-and-display-in-frostbite/) - Alex Fry
 
 
 
