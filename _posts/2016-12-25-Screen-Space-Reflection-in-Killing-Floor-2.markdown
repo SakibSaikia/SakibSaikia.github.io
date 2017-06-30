@@ -1,7 +1,9 @@
 ---
-layout: post
-title:  "Screen Space Reflections in Killing Floor 2"
-date:   2016-12-25 22:23:46 -0500
+layout: 	post
+title:  	"Screen Space Reflections in Killing Floor 2"
+date:   	2016-12-25 22:23:46 -0500
+category: 	"Graphics"
+published:	true
 ---
 
 ![img1](/images/KF2-SSR-1.png)

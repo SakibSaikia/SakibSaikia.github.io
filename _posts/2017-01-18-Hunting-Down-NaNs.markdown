@@ -1,7 +1,9 @@
 ---
-layout: post
-title:  "Tracking Down NaNs in Shader Code"
-date:   2017-01-18 22:18:46 -0500
+layout: 	post
+title:  	"Tracking Down NaNs in Shader Code"
+date:   	2017-01-18 22:18:46 -0500
+category: 	"Graphics"
+published:	true
 ---
 
 I recently updated an old project from DX9(ShaderModel3) to DX11 (ShaderModel5). One of the things that I noticed immediately was that there were suddenly a lot of NaNs showing up which didn't exist earlier. This was a little surprising since the shaders hadn't changed. So, the difference must be in the HLSL intrinsics. A simple google search didn't return what I was looking for. So, I decided to look at the generated assembly for differences.
