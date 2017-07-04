@@ -6,7 +6,7 @@ category: 	"Graphics"
 published:	false
 ---
 
-This post is about vector matrix transforms in shaders, and how they are treated by today's GPUs. This seems like a pretty mundane topic of discussion, but there are a few things which seemed interesting to bring up, and this post is about that.
+This post is about vector matrix transforms in shaders, and how they are treated by today's GPUs. This seems like a pretty mundane topic of discussion, but there are a few things which seemed interesting to bring up.
 
 ### Matrix Storage
 There are two canonical ways to represent a matrix(2-dimensional entity) in memory(which is 1-dimensional) - **Row Major** and **Column Major**. For a matrix 
@@ -120,13 +120,29 @@ There is a lot more clutter - all those additional ```mov``` ops to retrieve the
 ### Going Deeper
 The above bytecode is only an intermediate representation - *it is not what gets executed on the GPU*. The graphics drivers perform the final compilation step to generate the ISA code.
 
-The following shows the ISA for the two cases compiled for AMD Ellesmere (GCN 4th Gen).
+The following shows the ISA for the two cases side-by-side compiled for AMD Ellesmere (GCN 4th Gen).
 
 |[![img5](/images/Mat_PreMul_ISA.png)](/images/Mat_PreMul_ISA.png)| 	 |[![img6](/images/Mat_PostMul_ISA.png)](/images/Mat_PostMul_ISA.png)|
 |:---------------------------------:|:-: |:----------------------------------:|
 |					       			|    | 						              |
 
-*They are identical!* At least for things we care about. Even the GPR usage is same at 18 SGPRs and 8 VGPRs. 
+*They are identical!* At least for the things we care about. Even the GPR usage is same at 18 SGPRs and 8 VGPRs. 
+
+...hmmm
+
+This actually makes sense when you consider that GCN architecture is **scalar**. In GCN, unlike VLIW and vector based architectures previously, each VALU operates on a single float or integer at a time (although the process happens for 64 threads simultaneously). 
+
+*"From the shader’s point of view each instruction operates on a single float or integer. That is
+what “scalar” means when discussing the architecture. However, the hardware will still run
+many instances of the shader in lockstep, basically as a very wide SIMD vector, 64 wide to
+be precise in the case of GCN, and that is what we refer to as vector instructions. So where
+the shader programmer sees a scalar float, the hardware sees a 64 float wide SIMD vector."* - Emil Persson (GDC '14)
+
+Or in other words, **GCN is SIMT as opposed to SIMD**. The same is more or less true for Nvidia as well (since Fermi?)
+
+So, our fancy asm ```dp4``` is gone and replaced with multiplications and additions (well, V_MAC_F32 to be specific). As such there is no noticeable improvements to be had in current gen hardware by optimizing matrix layouts to cleanup the DX asm above.
+
+I did notice a 1-2% improvement on a test case from the cleanup, but that is within the margin of error and if anything has got to do with memory access patterns for the matrix elements. 
 
 [^fn1]: [The ryg blog - Row major vs. column major, row vectors vs. column vectors](https://fgiesen.wordpress.com/2012/02/12/row-major-vs-column-major-row-vectors-vs-column-vectors/)
 [^fn2]: [Microsoft - Matrix Ordering](https://msdn.microsoft.com/en-us/library/windows/desktop/bb509634(v=vs.85).aspx#Matrix_Ordering)
