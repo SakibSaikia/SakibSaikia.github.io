@@ -1,18 +1,15 @@
 ---
 layout: 	post
-title:  	"Matrix Layout And Optimization"
+title:  	"Understanding Shader Matrix Transforms"
 date:   	2017-06-29 22:18:46 -0500
 category: 	"Graphics"
 published:	false
 ---
 
-For any graphics programmer, matrix math usually becomes second nature, however, I recently came across some sub-optimal shader code that made me stop and think about this. Things can get confusing real quick when you have to consider differences such as row-major vs. column-major, row vectors vs. column vectors, etc. Code bases are sometimes inconsistent, languages differ in their storage conventions, and sometimes there are incosistencies even within the same API (for example, HLSL uses column major storage but the float4x4 constructor takes row vectors as input). The choices you make can effect both correctness and performance.
-
-It is impornant to understand both matrix storage and vector matrix products. Fabian Giesen has a [nice writeup](https://fgiesen.wordpress.com/2012/02/12/row-major-vs-column-major-row-vectors-vs-column-vectors/) on this, but here is a gist.
+This post is about vector matrix transforms in shaders, and how they are treated by today's GPUs. This seems like a pretty mundane topic of discussion, but there are a few things which seemed interesting to bring up, and this post is about that.
 
 ### Matrix Storage
-
-Row-major and colum-major order refer the way that elements of the matrix (a 2-dimensional quantity) are stored contiguously in memory (which is 1-dimensional). Consider the following matrix :
+There are two canonical ways to represent a matrix(2-dimensional entity) in memory(which is 1-dimensional) - **Row Major** and **Column Major**. For a matrix 
 
 $$
 \begin{bmatrix} 
@@ -22,72 +19,115 @@ m_{31} & m_{32} & m_{33} \\
 \end{bmatrix}
 $$
 
-**Row-Major** stores the elements as $$m_{11},m_{12},m_{13},m_{21},m_{22},m_{23},m_{31},m_{32},m_{33}$$. C++ uses Row-Major storage. So, if you have an array representation for your matrix such as `float M[3][3]` in your application, this is how the elements are stored in memory.  
+*Row Major* stores the elements as $$m_{11},m_{12},m_{13},m_{21},m_{22},m_{23},m_{31},m_{32},m_{33}$$, and *Column Major* stores the elements as $$m_{11},m_{21},m_{31},m_{12},m_{22},m_{32},m_{13},m_{23},m_{33}$$. 
 
-**Column-Major** stores the elements as $$m_{11},m_{21},m_{31},m_{12},m_{22},m_{32},m_{13},m_{23},m_{33}$$. HLSL uses column major storage by default [^fn1]. 
+Whether a matrix is stored in row-major or column-major form depends on the language[^fn1]. C++ uses row-major, whereas HLSL uses column-major[^fn2]. As a result, if you have a matrix in C++ and pass the memory blob of the matrix to HLSL, the rows are read in as columns. *The matrix is transposed!* 
 
-So, if you have a matrix in C++ and pass the memory blob of the matrix to HLSL, the rows are read in as columns. The matrix is essentially [***transposed***](https://en.wikipedia.org/wiki/Transpose). 
+This is why matrices are transposed on the C++ side before binding to HLSL because $$(M^T)^T = M$$.
 
-### Vector Matrix Product
+### Vector Transformation
+Vectors can be represented in two different ways as well - they can either be represented as a $$n$$ x $$1$$ matrix such as $$ \begin{bmatrix} v_1 & v_2 & v_3 & \cdots \end{bmatrix} $$ or as a $$1$$ x $$n$$ matrix such as $$ \begin{bmatrix} v_1 \\ v_2 \\ v_3 \\ \vdots \end{bmatrix}$$. The first type is referred to as **Row Vector** and and latter one is a **Column Vector**. The two representations are transpose of each other.
 
-When you transform a vector by a matrix, it is basically a matrix multiplication of a $$n$$ x $$n$$ matrix with vector which is represented either as a $$n$$ x $$1$$ matrix such as $$ \begin{bmatrix} v_1 & v_2 & v_3 & \cdots \end{bmatrix} $$ or as a $$1$$ x $$n$$ matrix such as $$ \begin{bmatrix} v_1 \\ v_2 \\ v_3 \\ \vdots \end{bmatrix}$$. The first vector representation is referred to as **Row Vector** and and latter one is a **Column Vector**.
+For a matrix $$M$$ and vector $$\vec{v}$$, a *row vector* transformation is defined as $$\vec{v}M$$. Conversely, a *column vector* transformation is defined as $$M\vec{v}$$.
 
-For the multiplication to be valid, *row vectors* can only be pre-multiplied. For a matrix $$M$$ and vector $$\vec{v}$$, a row vector multiplication is defined as $$\vec{v}M$$.
-
-Conversely, *column vectors* can only be post-multiplied, such as $$M\vec{v}$$.
-
-Now, let's look at the row vector matrix multiplication for a second.
+Also, note a vector matrix product can be represented as a dot product of the vector $$\vec{v}$$ with a vector represented by each column of the matrix.
 
 $$\vec{v}M = 
 \vec{v}
 \left[
-	\begin{array}{c|c|c}
+	\begin{array}{c:c:c}
 		m_{11} & m_{12} & m_{13}\\
 		m_{21} & m_{22} & m_{23} \\
 		m_{31} & m_{32} & m_{33} \\
 	\end{array}
 \right]  =
 \begin{bmatrix}
-\vec{v}\bullet\vec{M_1} & \vec{v}\bullet\vec{M_2} & \vec{v}\bullet\vec{M_3}
+\vec{v}\cdot\vec{m_1} & \vec{v}\cdot\vec{m_2} & \vec{v}\cdot\vec{m_3}
 \end{bmatrix}
 $$
 
-*The above basically says that matrix vector multiplication can be represented as a dot product ($$\bullet$$) of the vector with vectors composed of each column of the matrix $$M$$ ($$\vec{M_1}$$, $$\vec{M_2}$$, $$\vec{M_3}$$)*. (To avoid confusion, I am not going to refer to $$\vec{M_1}$$, $$\vec{M_2}$$ and $$\vec{M_3}$$ as column vectors. It is also incorrect to call $$M$$ a column matrix or such.)
-
-### HLSL Vector Transpose Equivalence
-
-If, $$\vec{s} = \vec{v}M$$, then
-
+Now consider, $$\vec{s} = \vec{v}M$$. Then
 
 $$
 \vec{s}^T = {(\vec{v}M)}^T = M^T \vec{v}^T
 $$
 
-Now, in a strictly mathematical sense, 
-
-$$\vec{v}^T \neq \vec{v}$$
-
-
-However, HLSL does not distinguish between row and column vectors. A `float4` can represent either one, and it is the context in which it is used (PreMultiply or PostMultiply), that determines whether it is treated as a row or column vector.
-
-So, for HLSL math we can write
+Now, in a strictly mathematical sense, $$\vec{v}^T \neq \vec{v}$$. However, HLSL does not distinguish between row and column vectors. A `float4` can represent either one, and it is the context in which it is used, that determines whether it is treated as a row or column vector. Therefore, for the case of HLSL we can write 
 
 $$
 \vec{v}M = M^T \vec{v}
 $$
 
-This is important to note. Combined with the fact that the HLSL matrices are transposed (implicitly) when passing in from C++, this means there are two ways we can perform our matrix math in the shader. From here on out, I am going to assume that the multiplication order on the host/C++ side is $$\vec{v}M$$.
+*What this basically means, is that if we skip the matrix transpose on the C++ side (as discussed earlier) and we change the multiplication order in the shader, we get the same result!*
 
-* **Case 1 :** Pass the matrix as it is on the C++ side and change order of multiplication in the shader to $$M^T \vec{v}$$
-* **Case 2 :** Perform an additional (explicit) transpose of the matrix on the C++ side before passing it to HLSL and retain the same vector matrix multiplication order $$\vec{v}M$$. This is because $$(M^T)^T = M$$
+This is a case of two wrongs make a right, and can be a source of confusion in the code base - so I don't think anyone would recommend doing that. However, are there any unintentional side effects of doing this?
 
-However, are the two approaches actually equivalent? Let's look at the register contents in the shader and the associated asm code.
+### Vertex Shader Example
+Consider a simple vertex shader that takes in a matrix as a structured buffer parameter.
 
-#### Case 1 
+```glsl
+StructuredBuffer<float4x4> Matrices;
+float4 main (float4 pos : POSITION) : SV_Position
+{
+return mul (pos, Matrices[0]);
+}
+```
 
-Each column of the HLSL matrix is loaded into separate register
+The corresponding DX bytecode looks like this
 
-[![img1](/images/CB-Matrix.jpg)](/images/CB-Matrix.jpg)
+```asm
+ld_structured_indexable(structured_buffer, stride=64)(mixed,mixed,mixed,mixed) r0.xyzw, l(0), l(0), t0.xyzw
+dp4 o0.x, v0.xyzw, r0.xyzw
+ld_structured_indexable(structured_buffer, stride=64)(mixed,mixed,mixed,mixed) r0.xyzw, l(0), l(16), t0.xyzw
+dp4 o0.y, v0.xyzw, r0.xyzw
+ld_structured_indexable(structured_buffer, stride=64)(mixed,mixed,mixed,mixed) r0.xyzw, l(0), l(32), t0.xyzw
+dp4 o0.z, v0.xyzw, r0.xyzw
+ld_structured_indexable(structured_buffer, stride=64)(mixed,mixed,mixed,mixed) r0.xyzw, l(0), l(48), t0.xyzw
+dp4 o0.w, v0.xyzw, r0.xyzw
+```
 
+Pretty standard. There are 4 loads which fetch each *column* of the matrix into a register. The transform is, therefore, a simple dot product between the row vector and each column of the matrix (which in this case conveniently resides in the same register).
 
-[^fn1]: [Microsoft - Matrix Ordering](https://msdn.microsoft.com/en-us/library/windows/desktop/bb509634(v=vs.85).aspx#Matrix_Ordering)
+Now if we change the order of multiplication in the shader to ```mul(Matrices[0], pos)```, it generates the following asm.
+
+```asm
+ld_structured_indexable(structured_buffer, stride=64)(mixed,mixed,mixed,mixed) r0.xyzw, l(0), l(0), t0.xyzw
+mov r1.x, r0.x
+ld_structured_indexable(structured_buffer, stride=64)(mixed,mixed,mixed,mixed) r2.xyzw, l(0), l(16), t0.xzyw
+mov r1.y, r2.x
+ld_structured_indexable(structured_buffer, stride=64)(mixed,mixed,mixed,mixed) r3.xyzw, l(0), l(32), t0.xywz
+mov r1.z, r3.x
+ld_structured_indexable(structured_buffer, stride=64)(mixed,mixed,mixed,mixed) r4.xyzw, l(0), l(48), t0.xyzw
+mov r1.w, r4.x
+dp4 o0.x, r1.xyzw, v0.xyzw
+mov r1.x, r0.y
+mov r1.y, r2.z
+mov r1.z, r3.y
+mov r1.w, r4.y
+dp4 o0.y, r1.xyzw, v0.xyzw
+mov r2.x, r0.z
+mov r3.x, r0.w
+mov r3.y, r2.w
+mov r2.z, r3.w
+mov r2.w, r4.z
+mov r3.w, r4.w
+dp4 o0.w, r3.xyzw, v0.xyzw
+dp4 o0.z, r2.xyzw, v0.xyzw
+```
+
+There is a lot more clutter - all those additional ```mov``` ops to retrieve the matrix rows so that we can compute the dot product seem like overkill. You can fix this by passing in individual matrix columns from C++, reading them in as ```float4``` and reconstructing the matrix on the fly in the shader as discussed in [this post](http://richiesams.blogspot.com/2014/05/hlsl-turning-float4s-into-float4x4.html)[^fn3]. But before that, let's see what the effect of that will be.
+
+### Going Deeper
+The above bytecode is only an intermediate representation - *it is not what gets executed on the GPU*. The graphics drivers perform the final compilation step to generate the ISA code.
+
+The following shows the ISA for the two cases compiled for AMD Ellesmere (GCN 4th Gen).
+
+|[![img5](/images/Mat_PreMul_ISA.png)](/images/Mat_PreMul_ISA.png)| 	 |[![img6](/images/Mat_PostMul_ISA.png)](/images/Mat_PostMul_ISA.png)|
+|:---------------------------------:|:-: |:----------------------------------:|
+|					       			|    | 						              |
+
+*They are identical!* At least for things we care about. Even the GPR usage is same at 18 SGPRs and 8 VGPRs. 
+
+[^fn1]: [The ryg blog - Row major vs. column major, row vectors vs. column vectors](https://fgiesen.wordpress.com/2012/02/12/row-major-vs-column-major-row-vectors-vs-column-vectors/)
+[^fn2]: [Microsoft - Matrix Ordering](https://msdn.microsoft.com/en-us/library/windows/desktop/bb509634(v=vs.85).aspx#Matrix_Ordering)
+[^fn3]: [Turning float4's into a float4x4](http://richiesams.blogspot.com/2014/05/hlsl-turning-float4s-into-float4x4.html)
