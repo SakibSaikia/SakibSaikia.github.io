@@ -6,7 +6,7 @@ category: 	"Graphics"
 published:	true
 ---
 
-This post is about vector matrix transforms in shaders, and how they are treated by today's GPUs. This seems like a pretty mundane topic of discussion, but there are a few things which seemed interesting to bring up.
+This post is about vector matrix operations in shaders, and how they are treated by today's GPUs. This seems like a pretty mundane topic of discussion, but there are a few things which seemed interesting to bring up.
 
 ### Matrix Storage
 There are two canonical ways to represent a matrix(2-dimensional entity) in memory(which is 1-dimensional) - **Row Major** and **Column Major**. For a matrix 
@@ -130,7 +130,7 @@ The following shows the ISA for the two cases side-by-side compiled for AMD Elle
 
 ...hmmm
 
-This actually makes sense when you consider that GCN architecture is *"scalar"*. In GCN[^fn4], unlike VLIW based architectures like Terascale previously, each VALU operates on a single float or integer at a time (although the process happens for 64 threads simultaneously). 
+This actually makes sense when you consider that GCN architecture is *"scalar"*. In GCN[^fn4], unlike VLIW based architectures like Terascale[^fn5] previously, each VALU operates on a single float or integer at a time (although the process happens for 64 threads simultaneously). 
 
 ![img7](/images/GCNvVLIW.png)
 
@@ -140,13 +140,20 @@ many instances of the shader in lockstep, basically as a very wide SIMD vector, 
 be precise in the case of GCN, and that is what we refer to as vector instructions. So where
 the shader programmer sees a scalar float, the hardware sees a 64 float wide SIMD vector."* - Emil Persson (GDC '14)
 
-Or in other words, **GCN is SIMT as opposed to SIMD**. The same is more or less true for Nvidia as well (since Fermi?)
+Or in other words, **GCN is SIMT as opposed to SIMD**. The same is more or less true for Nvidia as well [^fn6] [^fn7] [^fn8] [^fn9]. 
 
-So, our fancy asm ```dp4``` is gone and replaced with multiplications and additions (well, V_MAC_F32 to be specific). As such there is no noticeable improvements to be had in current gen hardware by optimizing matrix layouts to cleanup the DX asm above.
+So, our fancy asm ```dp4``` is gone and replaced with multiplications and additions (well, ```V_MAC_F32``` to be specific). As such there is no noticeable improvements to be had in current gen hardware by optimizing matrix layouts to cleanup the DX asm above.
 
+###Conclusion
 I did notice a 1-2% improvement on a test case from the cleanup, but that is within the margin of error and if anything has got to do with memory access patterns for the matrix elements. 
+
 
 [^fn1]: [The ryg blog - Row major vs. column major, row vectors vs. column vectors](https://fgiesen.wordpress.com/2012/02/12/row-major-vs-column-major-row-vectors-vs-column-vectors/)
 [^fn2]: [Microsoft - Matrix Ordering](https://msdn.microsoft.com/en-us/library/windows/desktop/bb509634(v=vs.85).aspx#Matrix_Ordering)
 [^fn3]: [Turning float4's into a float4x4](http://richiesams.blogspot.com/2014/05/hlsl-turning-float4s-into-float4x4.html)
 [^fn4]: [The AMD GCN Architecture - A Crash Course](https://www.slideshare.net/DevCentralAMD/gs4106-the-amd-gcn-architecture-a-crash-course-by-layla-mah/)
+[^fn5]: [AMD's Radeon HD 5870: Bringing About the Next Generation Of GPUs](http://www.anandtech.com/show/2841/4)
+[^fn6]: [NVIDIA’s Next Generation CUDA Compute Architecture: Fermi](http://www.nvidia.com/content/PDF/fermi_white_papers/NVIDIA_Fermi_Compute_Architecture_Whitepaper.pdf)
+[^fn7]: [NVIDIA’s Next Generation CUDA Compute Architecture: Kepler GK110](https://www.nvidia.com/content/PDF/kepler/NVIDIA-Kepler-GK110-Architecture-Whitepaper.pdf)
+[^fn8]: [NVIDIA GeForce GTX 980](http://international.download.nvidia.com/geforce-com/international/pdfs/GeForce_GTX_980_Whitepaper_FINAL.PDF)
+[^fn9]: [NVIDIA GeForce GTX 1080](http://international.download.nvidia.com/geforce-com/international/pdfs/GeForce_GTX_1080_Whitepaper_FINAL.pdf)
