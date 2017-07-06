@@ -32,7 +32,7 @@
 			"file": "_posts/2017-07-06-Matrix-Operations-In-Shaders.markdown",
 			"settings":
 			{
-				"buffer_size": 9353,
+				"buffer_size": 9460,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -339,15 +339,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9353,
+						"buffer_size": 9460,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7260,
-								7260
+								5253,
+								5253
 							]
 						],
 						"settings":
@@ -355,7 +355,7 @@
 							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2295.0,
+						"translation.y": 1665.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
