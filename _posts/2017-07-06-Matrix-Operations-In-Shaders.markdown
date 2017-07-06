@@ -122,7 +122,7 @@ The above bytecode is only an intermediate representation - *it is not what gets
 
 The following shows the ISA for the two cases side-by-side compiled for AMD Ellesmere (GCN 4th Gen).
 
-|[![img5](/images/Mat_PreMul_ISA.PNG)](/images/Mat_PreMul_ISA.PNG)| 	 |[![img6](/images/Mat_PostMul_ISA.PNG)](/images/Mat_PostMul_ISA.PNG)|
+|[![img1](/images/Mat_PreMul_ISA.PNG)](/images/Mat_PreMul_ISA.PNG)| 	 |[![img2](/images/Mat_PostMul_ISA.PNG)](/images/Mat_PostMul_ISA.PNG)|
 |:---------------------------------:|:-: |:----------------------------------:|
 |					       			|    | 						              |
 
@@ -132,7 +132,7 @@ The following shows the ISA for the two cases side-by-side compiled for AMD Elle
 
 This actually makes sense when you consider that GCN architecture is *"scalar"*. In GCN[^fn4], unlike VLIW based architectures like Terascale[^fn5] previously, each VALU operates on a single float or integer at a time (although the process happens for 64 threads simultaneously). 
 
-![img7](/images/GCNvVLIW.png)
+![img3](/images/GCNvVLIW.PNG)
 
 *"From the shader’s point of view each instruction operates on a single float or integer. That is
 what “scalar” means when discussing the architecture. However, the hardware will still run
