@@ -21,10 +21,11 @@ $$
 
 *Row Major* stores the elements as $$m_{11},m_{12},m_{13},m_{21},m_{22},m_{23},m_{31},m_{32},m_{33}$$, and *Column Major* stores the elements as $$m_{11},m_{21},m_{31},m_{12},m_{22},m_{32},m_{13},m_{23},m_{33}$$. 
 
-Whether a matrix is stored in row-major or column-major form depends on the language[^fn1]. C++ uses row-major, whereas HLSL uses column-major[^fn2]. As a result, if you have a matrix in C++ and pass the memory blob of the matrix to HLSL, the rows are read in as columns. *The matrix is transposed!* 
+Whether a matrix is stored in row-major or column-major form depends on the language[^fn1]. C++ uses row-major, whereas HLSL uses column-major[^fn2] by default. As a result, if you have a matrix in C++ and pass the memory blob of the matrix to HLSL, the rows are read in as columns. *The matrix is transposed!* 
 
 This is why matrices are transposed on the C++ side before binding to HLSL because $$(M^T)^T = M$$.
 
+Or alternatively you can use ```#pragma pack_matrix(row_major)``` in HLSL to make the storage match C++. (Thanks to @optimizedaway on Twitter for catching this.)
 ### Vector Transformation
 Vectors can be represented in two different ways as well - they can either be represented as a $$n$$ x $$1$$ matrix such as $$ \begin{bmatrix} v_1 & v_2 & v_3 & \cdots \end{bmatrix} $$ or as a $$1$$ x $$n$$ matrix such as $$ \begin{bmatrix} v_1 \\ v_2 \\ v_3 \\ \vdots \end{bmatrix}$$. The first type is referred to as **Row Vector** and and latter one is a **Column Vector**. The two representations are transpose of each other.
 
