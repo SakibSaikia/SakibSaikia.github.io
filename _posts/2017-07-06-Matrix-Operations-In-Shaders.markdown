@@ -132,7 +132,7 @@ The following shows the ISA for the two cases side-by-side compiled for AMD Elle
 
 This actually makes sense when you consider that GCN architecture is *"scalar"*. In GCN[^fn4], unlike VLIW based architectures like Terascale[^fn5] previously, each VALU operates on a single float or integer at a time (although the process happens for 64 threads simultaneously). 
 
-![img3](/images/GCNvVLIW.PNG)
+[![img3](/images/GCNvVLIW.PNG)](https://www.slideshare.net/DevCentralAMD/gs4106-the-amd-gcn-architecture-a-crash-course-by-layla-mah/12)
 
 *"From the shader’s point of view each instruction operates on a single float or integer. That is
 what “scalar” means when discussing the architecture. However, the hardware will still run

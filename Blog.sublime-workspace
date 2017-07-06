@@ -29,20 +29,12 @@
 			}
 		},
 		{
-			"file": "_posts/2017-06-29-Understanding-Shader-Matrix-Transforms.markdown",
+			"file": "_posts/2017-07-06-Matrix-Operations-In-Shaders.markdown",
 			"settings":
 			{
-				"buffer_size": 8126,
+				"buffer_size": 9353,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "_site/Blog.sublime-project",
-			"settings":
-			{
-				"buffer_size": 45,
-				"line_ending": "Unix"
 			}
 		},
 		{
@@ -68,7 +60,7 @@
 			"file": "_layouts/default.html",
 			"settings":
 			{
-				"buffer_size": 463,
+				"buffer_size": 464,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -247,10 +239,12 @@
 		"/F/GitHub/SakibSaikia.github.io/_site/graphics",
 		"/F/GitHub/SakibSaikia.github.io/_site/graphics/2017",
 		"/F/GitHub/SakibSaikia.github.io/_site/graphics/2017/01",
-		"/F/GitHub/SakibSaikia.github.io/_site/graphics/2017/01/18"
+		"/F/GitHub/SakibSaikia.github.io/_site/graphics/2017/01/18",
+		"/F/GitHub/SakibSaikia.github.io/_site/graphics/2017/07"
 	],
 	"file_history":
 	[
+		"/F/GitHub/SakibSaikia.github.io/_posts/2017-06-29-Understanding-Shader-Matrix-Transforms.markdown",
 		"/F/GitHub/SakibSaikia.github.io/_posts/2017-06-29-Matrix-Layout-And-Shader-Code.markdown",
 		"/F/GitHub/SakibSaikia.github.io/_site/graphics/2017/01/18/Matrix-Layout-And-Shader-Code_1.html",
 		"/F/GitHub/SakibSaikia.github.io/_posts/2017-06-29-Matrix-Layout-And-Shader-Code_1.markdown",
@@ -280,6 +274,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"png",
+			"Conclusion",
 			" [^",
 			"fn1",
 			"SPEC_INTENSITY_TO_REFLECTANCE",
@@ -306,7 +302,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -322,8 +318,8 @@
 						"selection":
 						[
 							[
-								743,
-								743
+								2452,
+								2452
 							]
 						],
 						"settings":
@@ -331,7 +327,7 @@
 							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 121.0,
+						"translation.y": 2161.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -339,19 +335,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "_posts/2017-06-29-Understanding-Shader-Matrix-Transforms.markdown",
+					"file": "_posts/2017-07-06-Matrix-Operations-In-Shaders.markdown",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8126,
+						"buffer_size": 9353,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1007,
-								1007
+								7260,
+								7260
 							]
 						],
 						"settings":
@@ -359,42 +355,14 @@
 							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "_site/Blog.sublime-project",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 45,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2295.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "/F/CodeXL Projects/Project8-CodeXL-64-bit-Ellesmere_Vertex3_VS_Vertex3-20170703-2227.csv",
 					"semi_transient": false,
 					"settings":
@@ -422,7 +390,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 3,
 					"file": "_layouts/page.html",
 					"semi_transient": false,
 					"settings":
@@ -446,24 +414,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 4,
 					"file": "_layouts/default.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 463,
+						"buffer_size": 464,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								463,
-								463
+								464,
+								464
 							]
 						],
 						"settings":
@@ -476,11 +444,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 5,
 					"file": "_posts/2017-01-18-Hunting-Down-NaNs.markdown",
 					"semi_transient": false,
 					"settings":
@@ -508,7 +476,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 6,
 					"file": "_posts/2016-12-25-Screen-Space-Reflection-in-Killing-Floor-2.markdown",
 					"semi_transient": false,
 					"settings":
