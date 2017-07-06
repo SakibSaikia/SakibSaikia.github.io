@@ -1,9 +1,9 @@
 ---
 layout: 	post
-title:  	"Understanding Shader Matrix Transforms"
+title:  	"Matrix Operations in Shaders"
 date:   	2017-06-29 22:18:46 -0500
 category: 	"Graphics"
-published:	false
+published:	true
 ---
 
 This post is about vector matrix transforms in shaders, and how they are treated by today's GPUs. This seems like a pretty mundane topic of discussion, but there are a few things which seemed interesting to bring up.
@@ -130,7 +130,9 @@ The following shows the ISA for the two cases side-by-side compiled for AMD Elle
 
 ...hmmm
 
-This actually makes sense when you consider that GCN architecture is **scalar**. In GCN, unlike VLIW and vector based architectures previously, each VALU operates on a single float or integer at a time (although the process happens for 64 threads simultaneously). 
+This actually makes sense when you consider that GCN architecture is *"scalar"*. In GCN[^fn4], unlike VLIW based architectures like Terascale previously, each VALU operates on a single float or integer at a time (although the process happens for 64 threads simultaneously). 
+
+![img7](/images/GCNvVLIW.png)
 
 *"From the shader’s point of view each instruction operates on a single float or integer. That is
 what “scalar” means when discussing the architecture. However, the hardware will still run
@@ -147,3 +149,4 @@ I did notice a 1-2% improvement on a test case from the cleanup, but that is wit
 [^fn1]: [The ryg blog - Row major vs. column major, row vectors vs. column vectors](https://fgiesen.wordpress.com/2012/02/12/row-major-vs-column-major-row-vectors-vs-column-vectors/)
 [^fn2]: [Microsoft - Matrix Ordering](https://msdn.microsoft.com/en-us/library/windows/desktop/bb509634(v=vs.85).aspx#Matrix_Ordering)
 [^fn3]: [Turning float4's into a float4x4](http://richiesams.blogspot.com/2014/05/hlsl-turning-float4s-into-float4x4.html)
+[^fn4]: [The AMD GCN Architecture - A Crash Course](https://www.slideshare.net/DevCentralAMD/gs4106-the-amd-gcn-architecture-a-crash-course-by-layla-mah/)
