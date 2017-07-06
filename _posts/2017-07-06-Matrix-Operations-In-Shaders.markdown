@@ -140,7 +140,7 @@ many instances of the shader in lockstep, basically as a very wide SIMD vector, 
 be precise in the case of GCN, and that is what we refer to as vector instructions. So where
 the shader programmer sees a scalar float, the hardware sees a 64 float wide SIMD vector."* - Emil Persson (GDC '14)
 
-Or in other words, **GCN is SIMT as opposed to SIMD**. The same is more or less true for Nvidia as well [^fn6] [^fn7] [^fn8] [^fn9]. 
+Or in other words, **GCN is [SIMT](https://en.wikipedia.org/wiki/Single_instruction,_multiple_threads) as opposed to SIMD**. The same is more or less true for Nvidia as well [^fn6] [^fn7] [^fn8] [^fn9]. 
 
 So, our fancy asm ```dp4``` is gone and replaced with multiplications and additions (well, ```V_MAC_F32``` to be specific). As such there is no noticeable improvements to be had in current gen hardware by optimizing matrix layouts to cleanup the DX asm above.
 
