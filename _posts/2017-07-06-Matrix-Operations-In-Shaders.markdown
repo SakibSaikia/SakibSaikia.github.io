@@ -122,7 +122,7 @@ The above bytecode is only an intermediate representation - *it is not what gets
 
 The following shows the ISA for the two cases side-by-side compiled for AMD Ellesmere (GCN 4th Gen).
 
-|[![img5](/images/Mat_PreMul_ISA.png)](/images/Mat_PreMul_ISA.png)| 	 |[![img6](/images/Mat_PostMul_ISA.png)](/images/Mat_PostMul_ISA.png)|
+|[![img5](/images/Mat_PreMul_ISA.PNG)](/images/Mat_PreMul_ISA.PNG)| 	 |[![img6](/images/Mat_PostMul_ISA.PNG)](/images/Mat_PostMul_ISA.PNG)|
 |:---------------------------------:|:-: |:----------------------------------:|
 |					       			|    | 						              |
 
