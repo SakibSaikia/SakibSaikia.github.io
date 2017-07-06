@@ -144,8 +144,8 @@ Or in other words, **GCN is SIMT as opposed to SIMD**. The same is more or less 
 
 So, our fancy asm ```dp4``` is gone and replaced with multiplications and additions (well, ```V_MAC_F32``` to be specific). As such there is no noticeable improvements to be had in current gen hardware by optimizing matrix layouts to cleanup the DX asm above.
 
-###Conclusion
-I did notice a 1-2% improvement on a test case from the cleanup, but that is within the margin of error and if anything has got to do with memory access patterns for the matrix elements. 
+### Conclusion
+I did notice a 1-2% improvement on a test case from the cleanup, but that is within the margin of error and if anything has got to do with memory access patterns for the matrix elements. Although matrix layout organization may not bring any perf gains, sticking to one convention and being consistent can help avoid major headaches down the road, and keep things more portable.
 
 
 [^fn1]: [The ryg blog - Row major vs. column major, row vectors vs. column vectors](https://fgiesen.wordpress.com/2012/02/12/row-major-vs-column-major-row-vectors-vs-column-vectors/)
