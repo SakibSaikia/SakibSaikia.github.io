@@ -1,7 +1,7 @@
 ---
 layout: 	post
 title:  	"Matrix Operations in Shaders"
-date:   	2017-07-06 22:18:46 -0500
+date:   	2017-06-29 22:18:46 -0500
 category: 	"Graphics"
 published:	true
 ---
