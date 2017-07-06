@@ -3,7 +3,7 @@ layout: 	post
 title:  	"Matrix Operations in Shaders"
 date:   	2017-06-29 22:18:46 -0500
 category: 	"Graphics"
-published:	true
+published:	false
 ---
 
 This post is about vector matrix operations in shaders, and how they are treated by today's GPUs. This seems like a pretty mundane topic of discussion, but there are a few things which seemed interesting to bring up.
