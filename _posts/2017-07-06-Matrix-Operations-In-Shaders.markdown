@@ -25,7 +25,7 @@ Whether a matrix is stored in row-major or column-major form depends on the lang
 
 This is why matrices are transposed on the C++ side before binding to HLSL because $$(M^T)^T = M$$.
 
-Or alternatively you can use ```#pragma pack_matrix(row_major)``` in HLSL to make the storage match C++. (Thanks to @optimizedaway on Twitter for catching this.)
+Or alternatively you can use ```#pragma pack_matrix(row_major)``` in HLSL to make the storage match C++. (Thanks to [@optimizedaway](https://twitter.com/optimizedaway) for pointing this out.)
 ### Vector Transformation
 Vectors can be represented in two different ways as well - they can either be represented as a $$n$$ x $$1$$ matrix such as $$ \begin{bmatrix} v_1 & v_2 & v_3 & \cdots \end{bmatrix} $$ or as a $$1$$ x $$n$$ matrix such as $$ \begin{bmatrix} v_1 \\ v_2 \\ v_3 \\ \vdots \end{bmatrix}$$. The first type is referred to as **Row Vector** and and latter one is a **Column Vector**. The two representations are transpose of each other.
 
@@ -133,7 +133,7 @@ The following shows the ISA for the two cases side-by-side compiled for AMD Elle
 
 This actually makes sense when you consider that GCN architecture is *"scalar"*. In GCN[^fn4], ~~unlike VLIW based architectures like Terascale[^fn5] previously,~~ each VALU operates on a single float or integer at a time (although the process happens for 64 threads simultaneously). 
 
-(Thanks for [@rygorous](https://twitter.com/rygorous) for the correction related to Terascale.)
+(Thanks to [@rygorous](https://twitter.com/rygorous) for the correction related to Terascale. Terascale was VLIW but scalar as well.. Not SIMD!)
 
 [![img3](/images/GCNvVLIW.PNG)](https://www.slideshare.net/DevCentralAMD/gs4106-the-amd-gcn-architecture-a-crash-course-by-layla-mah/12)
 
