@@ -226,5 +226,36 @@ bool OcclusionCull(float MaxZ, float4 SBox)
 
 ```
 
+The following code shows a single pass of the HZB generation. ** Note that the HZB dimensions need to be a power of 2 for the downsampling to work correctly **
+
+``` glsl
+
+// Reciprocal of the dimensions of the source and destination surfaces.
+float2 RcpBufferDimSrc;
+float2 RcpBufferDimDest;
+
+
+static const float UVOffset = 0.25f;
+
+[numthreads(WARP_SIZE, GROUP_SIZE, 1)]
+void DownsampleCS(uint3 DispatchId : SV_DispatchThreadID)
+{
+	uint2 ST = DispatchId.xy;
+	float2 Position = ST + 0.5;
+	float2 UV = Position * RcpBufferDimSrc;
+
+	float4 Depth;
+
+	Depth.x = DepthTexIn.SampleLevel(DepthTexInSampler, UV + float2(-UVOffset, -UVOffset) * RcpBufferDimDest, 0).r;
+	Depth.y = DepthTexIn.SampleLevel(DepthTexInSampler, UV + float2(UVOffset, -UVOffset) * RcpBufferDimDest, 0).r;
+	Depth.z = DepthTexIn.SampleLevel(DepthTexInSampler, UV + float2(-UVOffset, UVOffset) * RcpBufferDimDest, 0).r;
+	Depth.w = DepthTexIn.SampleLevel(DepthTexInSampler, UV + float2(UVOffset, UVOffset) * RcpBufferDimDest, 0).r;
+
+	float MinDepth = min(min(Depth.x, Depth.y), min(Depth.z, Depth.w));
+
+	DepthTexOut[DispatchId.xy] = MinDepth;
+}
+```
+
 
 
