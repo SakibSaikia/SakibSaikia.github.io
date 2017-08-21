@@ -146,7 +146,25 @@ void Main(uint3 DTid : SV_DispatchThreadID)
 
 ```
 
-The following snippet is used to get screen bounds, and perfrom HZB occlusion culling. The Z-Tests are reversed because we are using a reverse Z floating point depth buffer.
+The code below is used for frustum culling
+
+``` glsl
+bool FrustumCull(float3 WorldBoundsOrigin, float Radius)
+{
+	for (uint i = 0; i < NumFrustumPlanes; ++i)
+	{
+		float PlaneDistance = dot(FrustumPlanes[i].xyz, WorldBoundsOrigin) - FrustumPlanes[i].w;
+		if (PlaneDistance > Radius)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+```
+
+The following snippet is used to get screen bounds, and perfrom [HZB occlusion culling](http://blog.selfshadow.com/publications/practical-visibility/). The Z-Tests are reversed because we are using a [reverse Z floating point depth buffer](http://www.reedbeta.com/blog/depth-precision-visualized/).
 
 ``` glsl
 bool GetScreenBounds(float3 CornerVerts[8], out float MaxZ, out float4 SBox)
@@ -175,9 +193,7 @@ bool GetScreenBounds(float3 CornerVerts[8], out float MaxZ, out float4 SBox)
 
 	return true;
 }
-```
 
-``` glsl
 bool OcclusionCull(float MaxZ, float4 SBox)
 {
 	// Calculate HZB level.
