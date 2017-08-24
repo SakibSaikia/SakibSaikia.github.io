@@ -6,26 +6,29 @@ category: 	"Graphics"
 published:	false
 ---
 
-The following is a simple algorithm that I used to change UE3's renderer to use indirect rendering, and draw a large number of instanced meshes in a single batched draw. The key motivations were
+The following is a simple algorithm that I used to change UE3's renderer to use indirect rendering, and draw a large number of instanced meshes in a single batched draw. It requires DX11 feature set.
+
+The key motivations were
 
 * Support long draw distances and higher draw calls
 * Reduce CPU time spent on rendering, which for the most part runs on a single thread
 * Minimal artist intervention - it just works!
 
 ### Overview
-1. During an offline build phase, go through all the placed assets in the level and create an aggregate *InstancedDrawBatch* structure which contains instancing info and indirect args buffer (to be populated later)
-2. Launch a culling task per draw batch. This performs frustum culling, occlusion culling (using HZB), projected bounds size culling, etc. The instance info for all instances that pass culling are copied over to another buffer which will be used during draw submission. The indirect args buffer is populated at the same time.
-3. Submit the indirect args buffer generated for each batch using `DrawIndexedInstancedIndirect()`
+1. At map build time, go through all the placed assets in the level and create an aggregate *InstancedDrawBatch* structure which contains instancing info and indirect args buffer (to be populated later). This is serialized out and saved with the level data.
+2. At map load time, load all the generated draw batches for the level.
+3. At runtime, launch a culling task per draw batch every frame. This performs frustum culling, occlusion culling (using HZB), projected bounds size culling, etc. The instance info for all instances that pass culling are copied over to another buffer which will be used during draw submission. The indirect args buffer is populated at the same time.
+4. Submit the indirect args buffer generated for each batch using `DrawIndexedInstancedIndirect()`
 
-### InstancedDrawBatch
-This is an aggregate struct that holds all the information required to cull and render an instance group. The following is a concise and simplified C++ representation.
+### Batch Resources
+InstancedDrawBatch is an aggregate struct that holds all the information required to cull and render an instance group. The following is a concise and simplified C++ representation.
 
 ``` C++
 struct InstancedDrawBatch
 {
 	FVertexBuffer vb; 				// Vertex buffer shared by all instances in batch
 	FIndexBuffer ib; 				// Index buffer shared by all instances in the batch
-	FIndexBufferType ib_pos;		// Simplified IB with degenerate verts removed 
+	FIndexBuffer ib_pos;			// Simplified IB with degenerate verts removed 
 	FTypedBuffer vcolor;			// Appended vert color data for every instance in the batch
 	FStructuredBuffer inst_buff;	// Data unique to each instance - transforms, vcolor index, etc.
 	FStructuredBuffer inst_buff_draw;// Same as above but filled out after culling. *Not Serialized*
@@ -37,7 +40,7 @@ struct InstancedDrawBatch
 };
 ``` 
 
-The structured buffer for `inst_buff` has the following data
+The structured buffer for `inst_buff` has the following data. It contains data unique to each instance in the batch.
 
 ``` C++
 struct InstanceData
@@ -50,6 +53,48 @@ struct InstanceData
 	uint32_t vert_lighting_index;		// Index into vertex lighting typed buffers
 };
 ```
+
+`cbuffer` holds data that is shared by all instances in the batch
+
+``` C++
+struct ConstantData
+{
+	vector3 bounds_origin;
+	float3 bounds_radius;
+	float3 bounds_extent;
+	size_t num_instances;
+	size_t num_verts_per_instance;
+};
+```
+
+At render time, SV_InstanceID and SV_VertexID are used to retrieve the above information in a vertex shader. Since SV_InstanceID can only be input into the first active shader in the pipeline, it is passed as an attribute (without interpolation) to the pixel shader. That way the pixel shader can access the instancing data as well. See example below.
+
+``` glsl
+StructuredBuffer<InstanceData> PerInstanceData : register(t0);
+Buffer<float4> BatchVertexColor : register(t1);
+
+void vs_main(
+	...
+	uint instance_id 							: SV_InstanceID,
+	uint vertex_id 								: SV_VertexID,
+	out nointerpolation uint out_instance_id 	: InstanceID
+	out float4 pos 								: SV_Position,
+	)
+{
+	// Retrieve instance transform from PerInstanceData structured buffer using SV_InstanceId
+	float3x3 inst_local_to_world = PerInstanceData[instance_id].local_to_world;
+
+	// Vertex color for all instances are appended end-to-end in a typed buffer.
+	// So, we need to perform an additional level of indirection when accessing it.
+	// First, get the offset of the vertex color data for this instance.
+	// Then use SV_Vertex id to access the color for that vert 
+	uint vert_color_index = PerInstanceData[instance_id].vert_color_index;
+	uint offset_from_start = vert_color_index * num_verts_per_instance;
+	float4 vert_color = BatchVertexColor.Load(offset_from_start + vertex_id);
+}
+
+```
+
 
 ### Culling
 The culling phase rejects all the instances in a draw batch that fail visibility tests and generates the args buffer for the idirect draw call. This is run early in the frame, before any render passes. The previous frame's z-buffer is used for occlusion culling.
@@ -164,7 +209,7 @@ bool FrustumCull(float3 WorldBoundsOrigin, float Radius)
 }
 ```
 
-The following snippet is used to get screen bounds, and perfrom [HZB occlusion culling](http://blog.selfshadow.com/publications/practical-visibility/). The Z-Tests are reversed because we are using a [reverse Z floating point depth buffer](http://www.reedbeta.com/blog/depth-precision-visualized/).
+The following snippet is used to get screen bounds, and perfrom [HZB occlusion culling](http://blog.selfshadow.com/publications/practical-visibility/). The Z-Tests are reversed because we are using a [reverse floating point depth buffer](http://www.reedbeta.com/blog/depth-precision-visualized/).
 
 ``` glsl
 bool GetScreenBounds(float3 CornerVerts[8], out float MaxZ, out float4 SBox)
@@ -256,6 +301,18 @@ void DownsampleCS(uint3 DispatchId : SV_DispatchThreadID)
 	DepthTexOut[DispatchId.xy] = MinDepth;
 }
 ```
+
+### Rendering
+Once the draw batches have been culled, they are submitted for rendering using `DrawIndexedInstancedIndirect()`. As is the case with indirect rendering, we have to submit draw calls for all the draw batches, *even if all instances within it have been culled*. Although the GPU cost for these "null" draws is fairly small, it is not neglibile. The CPU cost for these draws is the same as a any other draw call. As such, it is important to keep the number of draw batches low.
+
+The solution I ended up using to mitigate this was to use a instance threshold for batching. Any asset that was re-used more than 32 times was considered for indirect rendering, all others fell back to using the old direct rendering codepath - essentially a **hybrid solution**.
+
+The following shows some of the perf gains achieved by going indirect.
+
+![img1](/images/IndirectRenderingPerf.jpg)
+
+### Caveats
+
 
 
 
