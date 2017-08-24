@@ -184,7 +184,7 @@ void Main(uint3 DTid : SV_DispatchThreadID)
 		DrawArgsDstBuffer.InterlockedAdd(4, 1, writeIndex);
 		DrawInstanceBuffer[writeIndex] = InstanceBuffer[i];
 
-		// Wind
+		// Wind Simulation
 		DrawInstanceBuffer[writeIndex].WindDirectionAndSpeed = SimulateWind(WorldBoundsOrigin.xyz);
 	}
 }
@@ -312,6 +312,12 @@ The following shows some of the perf gains achieved by going indirect.
 ![img1](/images/IndirectRenderingPerf.jpg)
 
 ### Caveats
+Despitve the above performance gains, and the relative simplicity of the technique, here are a few things that don't work so well.
+
+* Unique Geometry - Since this technique groups instances by mesh and material for instancing, the mileage you get out of it is directly proportional to the number of instanced assets in view. It will not work well with scenes made up of a lot of unique assets.
+* LODs -  Although LODs can be supported by this technique by creating separate draw batches for each mesh LOD and culling them based on distance, doing so can double or triple the number of draw batches to be submitted each frame which increases the baseline cost. Our solution was to *not* use artist-authored LODs but instead, procedurally disable stuff in the culling pass based on distance such as vertex movement due to wind, etc. It is important to do a depth prepass and force early Z to keep shading costs down in the base color/lighting pass.
+
+
 
 
 
