@@ -3,7 +3,7 @@ layout: 	post
 title:  	"Going Indirect on UE3"
 date:   	2017-08-18 15:45:46 -0500
 category: 	"Graphics"
-published:	false
+published:	true
 ---
 
 The following is a simple algorithm that I used to change UE3's renderer to use indirect rendering, and draw a large number of instanced meshes in a single batched draw. It requires DX11 feature set.
@@ -307,7 +307,7 @@ Once the draw batches have been culled, they are submitted for rendering using `
 
 The solution I ended up using to mitigate this was to use a instance threshold for batching. Any asset that was re-used more than 32 times was considered for indirect rendering, all others fell back to using the old direct rendering codepath - essentially a **hybrid solution**.
 
-The following shows some of the perf gains achieved by going indirect.
+The following shows some of the CPU perf gains achieved by going indirect.
 
 ![img1](/images/IndirectRenderingPerf.jpg)
 
@@ -318,7 +318,6 @@ Despitve the above performance gains, and the relative simplicity of the techniq
 * **LODs** -  Although LODs can be supported by this technique by creating separate draw batches for each mesh LOD and culling them based on distance, doing so can double or triple the number of draw batches to be submitted each frame which increases the baseline cost. Our solution was to *not* use artist-authored LODs but instead, procedurally disable stuff in the culling pass based on distance such as vertex movement due to wind, etc. When doing that, it becomes important to do a depth prepass and force early Z to keep shading costs down in the base color/lighting pass.
 
 ### Conclusion
-
 Because draw submission and culling are offloaded to the GPU, the GPU has to be able to take on the additional work. The choice to not use LODs created extra GPU work as well. However, this was fine for our case because we were severely CPU limited by a single render thread, and the GPU utilization was poor as seen through [GPUView](https://graphics.stanford.edu/~mdfisher/GPUView.html). Going from a CPU-limited case to a GPU-limited one was a good trade-off for us, particularly because the CPU workload can be erratic - being GPU-bound offered more consistent and better framerates.
 
 If the above constraints are acceptable, this can be a viable technique to using indirect rendering and instancing to optimize CPU time spent in rendering and push more detail. Thanks to @DrGr4f1x for his contribution on this, specially on the culling shaders.
