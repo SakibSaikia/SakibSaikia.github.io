@@ -271,7 +271,7 @@ bool OcclusionCull(float MaxZ, float4 SBox)
 
 ```
 
-The following code shows a single pass of the HZB generation. ** Note that the HZB dimensions need to be a power of 2 for the downsampling to work correctly **
+The following code shows a single pass of the HZB generation. *Note that the HZB dimensions need to be a power of 2 for the downsampling to work correctly*
 
 ``` glsl
 
@@ -314,8 +314,14 @@ The following shows some of the perf gains achieved by going indirect.
 ### Caveats
 Despitve the above performance gains, and the relative simplicity of the technique, here are a few things that don't work so well.
 
-* Unique Geometry - Since this technique groups instances by mesh and material for instancing, the mileage you get out of it is directly proportional to the number of instanced assets in view. It will not work well with scenes made up of a lot of unique assets.
-* LODs -  Although LODs can be supported by this technique by creating separate draw batches for each mesh LOD and culling them based on distance, doing so can double or triple the number of draw batches to be submitted each frame which increases the baseline cost. Our solution was to *not* use artist-authored LODs but instead, procedurally disable stuff in the culling pass based on distance such as vertex movement due to wind, etc. When doing that, it becomes important to do a depth prepass and force early Z to keep shading costs down in the base color/lighting pass.
+* **Unique Geometry** - Since this technique groups instances by mesh and material for instancing, the mileage you get out of it is directly proportional to the number of instanced assets in view. It will not work well with scenes made up of a lot of unique assets.
+* **LODs** -  Although LODs can be supported by this technique by creating separate draw batches for each mesh LOD and culling them based on distance, doing so can double or triple the number of draw batches to be submitted each frame which increases the baseline cost. Our solution was to *not* use artist-authored LODs but instead, procedurally disable stuff in the culling pass based on distance such as vertex movement due to wind, etc. When doing that, it becomes important to do a depth prepass and force early Z to keep shading costs down in the base color/lighting pass.
+
+### Conclusion
+
+Because draw submission and culling are offloaded to the GPU, the GPU has to be able to take on the additional work. The choice to not use LODs created extra GPU work as well. However, this was fine for our case because we were severely CPU limited by a single render thread, and the GPU utilization was poor as seen through [GPUView](https://graphics.stanford.edu/~mdfisher/GPUView.html). Going from a CPU-limited case to a GPU-limited one was a good trade-off for us, particularly because the CPU workload can be erratic - being GPU-bound offered more consistent and better framerates.
+
+If the above constraints are acceptable, this can be a viable technique to using indirect rendering and instancing to optimize CPU time spent in rendering and push more detail. Thanks to @DrGr4f1x for his contribution on this, specially on the culling shaders.
 
 
 
