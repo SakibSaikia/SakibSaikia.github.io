@@ -320,7 +320,7 @@ Despitve the above performance gains, and the relative simplicity of the techniq
 ### Conclusion
 Because draw submission and culling are offloaded to the GPU, the GPU has to be able to take on the additional work. The choice to not use LODs created extra GPU work as well. However, this was fine for our case because we were severely CPU limited by a single render thread, and the GPU utilization was poor as seen through [GPUView](https://graphics.stanford.edu/~mdfisher/GPUView.html). Going from a CPU-limited case to a GPU-limited one was a good trade-off for us, particularly because the CPU workload can be erratic - being GPU-bound offered more consistent and better framerates.
 
-If the above constraints are acceptable, this can be a viable technique to using indirect rendering and instancing to optimize CPU time spent in rendering and push more detail. Thanks to @DrGr4f1x for his contribution on this, specially on the culling shaders.
+If the above constraints are acceptable, this can be a viable technique to using indirect rendering and instancing to optimize CPU time spent in rendering and push more detail. Thanks to [@DrGr4f1x](https://twitter.com/DrGr4f1x) for his contribution on this, specially on the culling shaders.
 
 
 
