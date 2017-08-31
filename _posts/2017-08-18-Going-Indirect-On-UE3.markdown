@@ -3,7 +3,7 @@ layout: 	post
 title:  	"Going Indirect on UE3"
 date:   	2017-08-18 15:45:46 -0500
 category: 	"Graphics"
-published:	true
+published:	false
 ---
 
 The following is a simple algorithm that I used to change UE3's renderer to use indirect rendering, and draw a large number of instanced meshes in a single batched draw. It requires DX11 feature set.
