@@ -4,4 +4,4 @@ title: About
 permalink: /about/
 comments: false
 ---
-I am a graphics programmer working at [Tripwire Interactive](http://www.tripwireinteractive.com/). This is my blog to discuss things that I worked on and to share my thoughts on topics that are important to me.
+I am a Rendering Engineer working at [SkyBox Labs](http://skyboxlabs.com/) . I previously worked at [Tripwire Interactive](http://www.tripwireinteractive.com/) on Killing Floor 2, Red Orchestra 2 and Rising Storm. 
