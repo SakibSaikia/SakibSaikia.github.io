@@ -27,8 +27,8 @@ void Main(uint3 DispatchID : SV_DispatchThreadID)
 	float2 NDCPos = float2(2.f,-2.f) * PixelUV + float2(-1.f,1.f);
 
 	// Prerequisites
-	float3 WorldPosition = MulMatrix(ScreenToWorldMatrix, float4(NDCPos, 1, 0)).xyz;
 	float DeviceZ = DepthBufferTexture[PixelID];
+	float3 WorldPosition = MulMatrix(ScreenToWorldMatrix, float4(NDCPos, DeviceZ, 0)).xyz;
 	float3 CameraVector = normalize(WorldPosition - CameraPosition);
 	float4 WorldNormal = WorldNormalBufferTexture[PixelID] * float4(2, 2, 2, 1) - float4(1, 1, 1, 0);
 
@@ -321,11 +321,11 @@ void StepThroughCell(inout float3 RaySample, float3 RayDir, int MipLevel)
 	// Pick the cell intersection that is closer, and march to that cell
 	if (abs(t.x) < abs(t.y))
 	{
-		RaySample += (t.x + CELL_STEP_OFFSET) * RayDir;
+		RaySample += (t.x + CELL_STEP_OFFSET / MipSize.x) * RayDir;
 	}
 	else
 	{
-		RaySample += (t.y + CELL_STEP_OFFSET) * RayDir;
+		RaySample += (t.y + CELL_STEP_OFFSET / MipSize.y) * RayDir;
 	}
 }
 ```
@@ -333,7 +333,7 @@ void StepThroughCell(inout float3 RaySample, float3 RayDir, int MipLevel)
 ### Final Thoughts
 The HZB optimization allowed us to run SSR at full res (1080p) in ~2.5ms on current gen console and comparabe PC hardware. The HZB generation itselft took ~0.5ms. The SSR shader was run using async compute right after the G-buffer pass (and before lighting), since the color lookup was [decoupled from it](Screen-Space-Reflection-in-Killing-Floor-2.html#deferred-color-lookup). 
 
-Going forward, having a coarse SSR pass precdeing the HZB raymarching that can reject tiles we don't want to perform ray marching on might be beneficial. I plan to do another post later with more detailed perf analysis.
+Going forward, having a coarse SSR pass precdeing the HZB raymarching that can reject tiles we don't want to perform ray marching on might be beneficial. ~~I plan to do another post later with more detailed perf analysis.~~
 
 # References
 
