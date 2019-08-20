@@ -1,0 +1,321 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"in",
+				"inherited"
+			],
+			[
+				"print",
+				"print_inorder"
+			],
+			[
+				"lc",
+				"static-libstdc"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "_posts/2016-12-25-Screen-Space-Reflection-in-Killing-Floor-2.markdown",
+			"settings":
+			{
+				"buffer_size": 15174,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/projects/D3D12SampleFramework/Content/Sponza/obj/sponza.obj",
+			"settings":
+			{
+				"buffer_size": 21109956,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "mark",
+		"selected_items":
+		[
+			[
+				"mark",
+				"MarkdownLivePreview: Edit Current File"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"gdb",
+				"Preferences: SublimeGDB Settings – Default"
+			],
+			[
+				"sublimegdb",
+				"Preferences: SublimeGDB Settings – Default"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 412.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"shell_cmd",
+			"shell+cmd",
+			"g++ hello.cpp -o hello;",
+			"g++ hello.cpp -o hello",
+			"g++ hello.cpp",
+			"g++",
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"g++ hello.cpp"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/Blog/SakibSaikia.github.io",
+		"/D/Blog/SakibSaikia.github.io/_posts"
+	],
+	"file_history":
+	[
+		"/D/projects/D3D12SampleFramework/Src/Material.hlsl",
+		"/C/Users/sakib/Downloads/feedly-f79031fe-c09f-4d09-b120-4a73d8ee9e67-2019-02-14.opml",
+		"/D/projects/dxr-sample/Src/DebugMaterial.hlsl",
+		"/D/GithubSamples/d3d12book/Chapter 20 Shadow Mapping/Shadows/Shaders/Default.hlsl",
+		"/D/GithubSamples/d3d12book/Chapter 20 Shadow Mapping/Shadows/Shaders/Common.hlsl",
+		"/D/GithubSamples/d3d12book/Chapter 20 Shadow Mapping/Shadows/Shaders/Shadows.hlsl",
+		"/D/GithubSamples/d3d12book/Chapter 8 Lighting/LitColumns/Shaders/LightingUtil.hlsl",
+		"/D/Projects/D3D12SampleFramework/Content/Sponza/obj/sponza.obj",
+		"/D/GithubSamples/d3d12book/Chapter 8 Lighting/LitColumns/Shaders/Default.hlsl",
+		"/D/Projects/D3D12SampleFramework/Content/Sponza/obj/sponzaPBR.mtl",
+		"/D/Projects/CPURayTracer/README.md",
+		"/D/Projects/D3D12SampleFramework/Content/Sponza/SponzaPBR_Textures/sponzaPBR.mtl",
+		"/F/Projects/D3D12SampleFramework/Content/Sponza/obj/sponza.obj",
+		"/F/Projects/D3D12SampleFramework/.gitignore",
+		"/F/Projects/D3D12SampleFramework/Src/packages.config",
+		"/F/Projects/D3D12SampleFramework/Content/Sponza/obj/sponza.mtl",
+		"/F/Projects/D3D12SampleFramework/Content/sponza_obj/sponza.mtl",
+		"/F/GitHub/SakibSaikia.github.io/_site/graphics/2017/01/18/Matrix-Layout-And-Shader-Code_1.html",
+		"/F/GitHub/SakibSaikia.github.io/_posts/2017-06-29-Matrix-Layout-And-Shader-Code_1.markdown",
+		"/F/GitHub/Shaders/Baffin_main_ssr.isa",
+		"/F/Projects/TestPrograms/BitManipulation.cpp/FindBitPos.cpp",
+		"/F/Projects/TestPrograms/BitManipulation.cpp/ReverseString.cpp",
+		"/F/Projects/TestPrograms/BitManipulation.cpp/PrintMemory.cpp",
+		"/F/Projects/TestPrograms/hello.cpp",
+		"/F/Projects/TestPrograms/TestProject.sublime-project",
+		"/C/Program Files/Sublime Text 3/Packages/C++.sublime-package",
+		"/F/Projects/RedEyeEngine/Engine/Code/Core/Headers/MathCore.h",
+		"/F/Projects/RedEyeEngine/Engine/Code/Core/Math/Src/MathCommon.cpp"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 104.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "_posts/2016-12-25-Screen-Space-Reflection-in-Killing-Floor-2.markdown",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15174,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13959,
+								13959
+							]
+						],
+						"settings":
+						{
+							"markdonw_live_preview_last_run": 1542702338.79,
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2052.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/D/projects/D3D12SampleFramework/Content/Sponza/obj/sponza.obj",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 21109956,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/HLSL.sublime-build",
+	"project": "Blog.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"mathcore",
+				"Engine\\Code\\Core\\Headers\\MathCore.h"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 359.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
