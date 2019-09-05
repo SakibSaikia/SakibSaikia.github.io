@@ -114,7 +114,7 @@ Since the direction vector $$\omega_i$$ and normal $$n$$ are assumed to be unit 
 
 $$
 \int_{\Omega}cos\theta d\omega_i
-= \alpha\int_{\theta=0}^{\frac{\pi}{2}}\int_{\phi=0}^{2\pi}cos\theta.rd\theta.rsin\theta d\phi
+= \int_{\theta=0}^{\frac{\pi}{2}}\int_{\phi=0}^{2\pi}cos\theta.rd\theta.rsin\theta d\phi
 =r^2 \int_{\theta=0}^{\frac{\pi}{2}} sin\theta cos\theta d\theta \int_{\phi=0}^{2\pi}d\phi
 $$
 
