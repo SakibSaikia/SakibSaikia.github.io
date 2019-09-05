@@ -6,53 +6,43 @@ category: 	"Graphics"
 published:	false
 ---
 
-This is a short exercise on integration. We will derive the Lambertian BRDF from first principles to understand the origin on $$\pi$$ in it.
+This is a short exercise on integration. We will derive the Lambertian BRDF from first principles to understand the origin of $$\pi$$ in it.
 
-It is already known that the Lambertian BRDF is $$\frac{albedo}{\pi}$$. Let's see how we get there from the rendering equation below:
+We start by stating that the Lambertian BRDF is $$\frac{\rho}{\pi}$$, where $$\rho$$ (albedo) is the measure of diffuse reflection. It is the proportion of incident light that is reflected from a surface and is used to denote how _bright_ a surface is (not to be confused with how _reflective_ a surface is). Albedo maps are used ubiquitously in lighting, and look like this. 
+
+<p align="center">
+	<img src="/images/lambertian-brdf/sponza-lion.png" width="50%" height="50%">
+</p>
+
+However, we need to come up with a more formal mathematical definition in this case. Real Time Rendering 4th Edition defines albedo as the __hemispherical-directional reflectance__ which measures the _amount of light reflected along a given direction for incoming light in any direction in the hemisphere around the surface normal_. It can be represented as: 
 
 $$
 \begin{equation}
-L_o(x,\omega_o) = L_e(x,w_o) + \int_{\Omega}f_r(x,\omega_i,\omega_o)  L_i(x,\omega_i)  (\omega_i . n) d\omega_i
+\rho = \int_{\Omega}f_r(x,\omega_i,\omega_o)  (\omega_i . n) d\omega_i
 \tag{1}
 \end{equation}
 $$
 
 where,
 
-$$L_o$$ = Outgoing radiance at point $$x$$ along the direction given by solid angle $$\omega_o$$  
-$$L_e$$ = Emitted radiance at point $$x$$ along the direction given by solid angle $$\omega_o$$  
-$$L_i$$ = Incoming radiance at point $$x$$ along the direction given by solid angle $$\omega_i$$  
 $$f_r$$ = BRDF at point $$x$$ for incoming radiance along $$\omega_i$$ and outgoing radiance along $$\omega_o$$  
 $$(\omega_i . n)$$ = Weakening factor for incoming direction $$\omega_i$$ and normal $$n$$  
 $${\Omega}$$ = This is used to denote the integration over the unit hemisphere
 
-For the purpose of this discussion, we are interested in diffuse reflectance only. So, we can drop the emissive term. Also, since the Lambertian BRDF is a model of diffuse reflectance it is invariant to the viewing direction. In other words, it is constant and can be taken out of the itegral. 
-
-So, our simplified rendering equation looks like this now.
+Since the Lambertian BRDF is a model of diffuse reflectance it is invariant to the the viewing direction. In other words, it is constant and can be taken out of the itegral. 
 
 $$
-L_o(x) = L_i(x) f_{lambert} \int_{\Omega}(\omega_i . n) d\omega_i \\
-\Rightarrow \frac{L_o(x)}{L_i(x)} = f_{lambert} \int_{\Omega}(\omega_i . n) d\omega_i
+\rho = f_{lambert} \int_{\Omega}(\omega_i . n) d\omega_i
 $$
-
-By definition, albedo is the measure of the proportion of incident light that is reflected by a surface. Hence,
-
-$$
-albedo = \frac{L_o(x)}{L_i(x)} = f_{lambert} \int_{\Omega}(\omega_i . n) d\omega_i
-$$
-
-or 
 
 $$
 \begin{equation}
-f_{lambert} = \frac{albedo}{\int_{\Omega}(\omega_i . n) d\omega_i}
+\Rightarrow f_{lambert} = \frac{\rho}{\int_{\Omega}(\omega_i . n) d\omega_i}
 \tag{2}
 \end{equation}
 $$
 
-Still reading? None of this is new, and chances are you've seen this a hundred times -- the purpose of this is to lay the groundwork for our little integration exercise. If, on the other hand, you are new to the topic I would refer you to the explanations in the Real Time Rendering books. There are several excellent explanations [online](https://www.gamedev.net/blogs/entry/2260986-the-rendering-equation/) as well. 
-
-Now, let's look at how to compute the integral $$\int_{\Omega}(\omega_i . n) d\omega_i$$ which is the Lambertian BRDF we set out to evaluate. But, first let's do a quick refresher on integral calculus.
+Now, let's look at how to compute the integral $$\int_{\Omega}(\omega_i . n) d\omega_i$$. But, first let's do a quick refresher on integral calculus.
 
 ### Review
 
@@ -148,7 +138,7 @@ $$
 \int_{\Omega}cos\theta d\omega_i = \pi
 $$
 
-and from equation $$(2)$$,
+and from equation $$(2)$$, we have
 
 $$
 f_{lambert} = \frac{albedo}{\pi}
