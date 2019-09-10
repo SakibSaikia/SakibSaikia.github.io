@@ -29,7 +29,7 @@ $$f_r$$ = BRDF at point $$x$$ for incoming radiance along $$\omega_i$$ and outgo
 $$(\omega_i . n)$$ = Weakening factor for incoming direction $$\omega_i$$ and normal $$n$$  
 $${\Omega}$$ = This is used to denote the integration over the unit hemisphere
 
-_Note: If this looks familiar to the [rendering equation](https://en.wikipedia.org/wiki/Rendering_equation/), it is because it is. Albedo corresponds reflected radiance from a perfectly diffuse surface when lit uniformly by a light of unit radiance._
+_Note: If this looks familiar to the [rendering equation](https://en.wikipedia.org/wiki/Rendering_equation/), it is because it is. Albedo corresponds reflected radiance from a perfectly diffuse surface when lit uniformly by light of unit radiance._
 
 Since the Lambertian BRDF is a model of diffuse reflectance it is invariant to the the viewing direction. In other words, it is constant and can be taken out of the itegral. 
 
