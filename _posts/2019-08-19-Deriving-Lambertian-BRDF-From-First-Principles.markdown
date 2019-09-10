@@ -1,9 +1,9 @@
 ---
 layout: 	post
 title:  	"Deriving Lambertian BRDF from first principles"
-date:   	2019-08-19 23:09:46 -0500
+date:   	2019-09-09 23:09:46 -0500
 category: 	"Graphics"
-published:	false
+published:	true
 ---
 
 This is a short exercise on integration. We will derive the Lambertian BRDF from first principles to understand the origin of $$\pi$$ in it.
@@ -28,6 +28,8 @@ where,
 $$f_r$$ = BRDF at point $$x$$ for incoming radiance along $$\omega_i$$ and outgoing radiance along $$\omega_o$$  
 $$(\omega_i . n)$$ = Weakening factor for incoming direction $$\omega_i$$ and normal $$n$$  
 $${\Omega}$$ = This is used to denote the integration over the unit hemisphere
+
+_Note: If this looks familiar to the [rendering equation](https://en.wikipedia.org/wiki/Rendering_equation/), it is because it is. Albedo corresponds reflected radiance from a perfectly diffuse surface when lit uniformly by a light of unit radiance._
 
 Since the Lambertian BRDF is a model of diffuse reflectance it is invariant to the the viewing direction. In other words, it is constant and can be taken out of the itegral. 
 
