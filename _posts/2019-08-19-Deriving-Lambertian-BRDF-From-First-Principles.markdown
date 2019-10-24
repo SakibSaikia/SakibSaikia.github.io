@@ -146,6 +146,6 @@ $$
 f_{lambert} = \frac{albedo}{\pi}
 $$ 
 
-Hope you enjoyed this post. To understand its implications in lighting calculations check out this post by Sébastian Lagarge - [Pi or not to Pi in game lighting equation](https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/).
+Hope you enjoyed this post. To understand its implications in lighting calculations check out this post by Sébastien Lagarde - [Pi or not to Pi in game lighting equation](https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/).
 
 
