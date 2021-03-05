@@ -4,6 +4,6 @@ title: About
 permalink: /about/
 comments: false
 ---
-I am a Rendering Engineer working at [SkyBox Labs](http://skyboxlabs.com/). Currently I am working on Halo Infinite. 
+I am a Rendering Engineer working at [Deviation Games](https://www.deviationgames.com/) on an unannounced project.
 
-I previously worked at [Tripwire Interactive](http://www.tripwireinteractive.com/) on Killing Floor 2, Red Orchestra 2 and Rising Storm. 
+I previously worked on Halo Infinite, Killing Floor 2, Red Orchestra 2 and Rising Storm. 
