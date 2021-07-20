@@ -106,7 +106,7 @@ Here,
 $$\phi$$ is known as the *azimuth angle* and its range is from $$0$$ to $$2\pi$$.   
 $$\theta$$ is known as the *elevation angle* and its range is from $$0$$ to $$\frac{\pi}{2}$$.
 
-The following diagram shows us how such a patch can be constructed. The $$rd\theta$$ term is same as earlier since it lies on the [great circle](https://en.wikipedia.org/wiki/Great_circle) or meridian. The radius of other circle is smaller -- $$rsin\theta$$. Hence, the length of that arc is $$rsin\theta d\theta$$ as shown below.
+The following diagram shows us how such a patch can be constructed. The $$rd\theta$$ term is same as earlier since it lies on the [great circle](https://en.wikipedia.org/wiki/Great_circle) or meridian. The radius of other circle is smaller -- $$rsin\theta$$. Hence, the length of that arc is $$rsin\theta d\phi$$ as shown below.
 
 <p align="center">
 	<img src="/images/lambertian-brdf/hemisphere-integration.jpg">
