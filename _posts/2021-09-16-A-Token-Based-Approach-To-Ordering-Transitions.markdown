@@ -21,7 +21,9 @@ This article outlines an approach to solving this problem that is more flexible 
 3. A later transition call must specify the token value obtained in step 2.
 - Transition calls are executed in order of the token value by waiting on a fence.
 - The cached resource state is updated once the transition call finishes. 
-- The transition is completed by signalling the fence which notifies that it is the turn of the next token in line.
+- The transition is completed by signalling the fence (on the CPU-side) which notifies that it is the turn of the next token in line.
+
+_Note that the tokens enforce the submission order. So, if you want to fire the render jobs out of order you can as long as you ensure that the tokens are obtained in proper submission order. Thanks to [@BelgianRenderer](https://twitter.com/BelgianRenderer) for bringing this up._
 
 The following example code should make this clear. These will focus on D3D12 but the same concepts should apply to Vulkan as well.
 
