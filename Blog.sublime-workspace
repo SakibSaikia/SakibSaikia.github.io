@@ -20,19 +20,20 @@
 	"buffers":
 	[
 		{
-			"file": "_posts/2016-12-25-Screen-Space-Reflection-in-Killing-Floor-2.markdown",
+			"contents": "superfly car 3\n    +++++++++   ******",
 			"settings":
 			{
-				"buffer_size": 15174,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
+				"buffer_size": 37,
+				"line_ending": "Windows",
+				"name": "superfly car 3"
 			}
 		},
 		{
-			"file": "/D/projects/D3D12SampleFramework/Content/Sponza/obj/sponza.obj",
+			"file": "/D/projects/dxr-sample/Src/Raygen.hlsl",
 			"settings":
 			{
-				"buffer_size": 21109956,
+				"buffer_size": 1195,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		}
@@ -102,10 +103,19 @@
 	"expanded_folders":
 	[
 		"/D/Blog/SakibSaikia.github.io",
+		"/D/Blog/SakibSaikia.github.io/_layouts",
 		"/D/Blog/SakibSaikia.github.io/_posts"
 	],
 	"file_history":
 	[
+		"/D/Blog/SakibSaikia.github.io/about.md",
+		"/D/Blog/SakibSaikia.github.io/_posts/2019-08-19-Deriving-Lambertian-BRDF-From-First-Principles.markdown",
+		"/D/projects/dxr-sample/Src/MaterialCommon.hlsli",
+		"/D/projects/dxr-sample/utils/shader-compiler.py",
+		"/C/Users/sakib/Desktop/Deriving Lambertian BRDF from first principles.html",
+		"/D/Blog/SakibSaikia.github.io/_posts/2017-07-06-Matrix-Operations-In-Shaders.markdown",
+		"/D/Blog/SakibSaikia.github.io/_posts/2016-12-25-Screen-Space-Reflection-in-Killing-Floor-2.markdown",
+		"/D/projects/D3D12SampleFramework/Content/Sponza/obj/sponza.obj",
 		"/D/projects/D3D12SampleFramework/Src/Material.hlsl",
 		"/C/Users/sakib/Downloads/feedly-f79031fe-c09f-4d09-b120-4a73d8ee9e67-2019-02-14.opml",
 		"/D/projects/dxr-sample/Src/DebugMaterial.hlsl",
@@ -137,7 +147,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 27.0
 	},
 	"find_in_files":
 	{
@@ -151,6 +161,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"I"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -173,29 +184,27 @@
 			[
 				{
 					"buffer": 0,
-					"file": "_posts/2016-12-25-Screen-Space-Reflection-in-Killing-Floor-2.markdown",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15174,
+						"buffer_size": 37,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								13959,
-								13959
+								37,
+								37
 							]
 						],
 						"settings":
 						{
-							"markdonw_live_preview_last_run": 1542702338.79,
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"auto_name": "superfly car 3",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2052.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -203,19 +212,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "/D/projects/D3D12SampleFramework/Content/Sponza/obj/sponza.obj",
+					"file": "/D/projects/dxr-sample/Src/Raygen.hlsl",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 21109956,
+						"buffer_size": 1195,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1114,
+								1114
 							]
 						],
 						"settings":
@@ -234,7 +243,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 27.0
 	},
 	"input":
 	{
@@ -271,7 +280,7 @@
 	"project": "Blog.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":

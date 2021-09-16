@@ -115,8 +115,7 @@ As a bonus, I also use this to implement fire-and-forget type render jobs that a
 
 ```C++
 size_t renderToken = jobSync.GetToken();
-
-return concurrency::create_task([=]
+concurrency::create_task([=]
 {
 	FCommandList* cmdList = RenderBackend12::FetchCommandlist(D3D12_COMMAND_LIST_TYPE_DIRECT);
 	
