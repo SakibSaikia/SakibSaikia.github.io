@@ -29,7 +29,7 @@ $$f_r$$ = BRDF at point $$x$$ for incoming radiance along $$\omega_i$$ and outgo
 $$(\omega_i . n)$$ = Weakening factor for incoming direction $$\omega_i$$ and normal $$n$$  
 $${\Omega}$$ = This is used to denote the integration over the unit hemisphere
 
-_Note: If this looks familiar to the [rendering equation](https://en.wikipedia.org/wiki/Rendering_equation/), it is because it is. Albedo corresponds reflected radiance from a perfectly diffuse surface when lit uniformly by a light of unit radiance._
+_Note: If this looks familiar to the [rendering equation](https://en.wikipedia.org/wiki/Rendering_equation), it is because it is. Albedo corresponds reflected radiance from a perfectly diffuse surface when lit uniformly by light of unit radiance._
 
 Since the Lambertian BRDF is a model of diffuse reflectance it is invariant to the the viewing direction. In other words, it is constant and can be taken out of the itegral. 
 
@@ -106,7 +106,7 @@ Here,
 $$\phi$$ is known as the *azimuth angle* and its range is from $$0$$ to $$2\pi$$.   
 $$\theta$$ is known as the *elevation angle* and its range is from $$0$$ to $$\frac{\pi}{2}$$.
 
-The following diagram shows us how such a patch can be constructed. The $$rd\theta$$ term is same as earlier since it lies on the [great circle](https://en.wikipedia.org/wiki/Great_circle) or meridian. The radius of other circle is smaller -- $$rsin\theta$$. Hence, the length of that arc is $$rsin\theta d\theta$$ as shown below.
+The following diagram shows us how such a patch can be constructed. The $$rd\theta$$ term is same as earlier since it lies on the [great circle](https://en.wikipedia.org/wiki/Great_circle) or meridian. The radius of other circle is smaller -- $$rsin\theta$$. Hence, the length of that arc is $$rsin\theta d\phi$$ as shown below.
 
 <p align="center">
 	<img src="/images/lambertian-brdf/hemisphere-integration.jpg">
@@ -146,6 +146,6 @@ $$
 f_{lambert} = \frac{albedo}{\pi}
 $$ 
 
-Hope you enjoyed this post. To understand its implications in lighting calculations check out this post by Sébastian Lagarge - [Pi or not to Pi in game lighting equation](https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/).
+Hope you enjoyed this post. To understand its implications in lighting calculations check out this post by Sébastien Lagarde - [Pi or not to Pi in game lighting equation](https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/).
 
 
