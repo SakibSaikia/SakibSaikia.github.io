@@ -3,7 +3,7 @@ layout: 	post
 title:  	"GDC 2017 Recap"
 date:   	2017-03-03 21:57:46 -0500
 category: 	"Conference"
-published:	true
+published:	false
 ---
 
 I was lucky enough to be able to visit GDC this year. As always, there were a lot of interesting talks, ideas and announcements to come out of it. I wasn't able to go to each one of these, but wanted to do a quick info dump of the ones I was able to attend. Quick disclaimer that this post isn't meant to be comprehensive (I'm only covering rendering/GPU/engine talks that I was able to attend), and some of my comments might be subjective to an extent (I might also be wrong, in which case please correct me :)). Also, Krzysztof Narkowicz is collating a list of presentation slides which you can find on his blog [here](https://knarkowicz.wordpress.com/2017/03/01/gdc-2017-presentations/). I'll will update this article with links to the presentations as and when they become available.
