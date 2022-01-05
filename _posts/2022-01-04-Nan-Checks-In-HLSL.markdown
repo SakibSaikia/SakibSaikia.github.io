@@ -60,4 +60,8 @@ bool IsNaN(float x)
 }
 ```
 
+Here is an image of a Renderdoc-style NaN overlay but running in realtime. The red pixels are NaNs.
+
+[<img src="/images/nan-checks/sponza-nan.png">](/images/nan-checks/sponza-nan.png)
+
 Pretty neat, huh?
