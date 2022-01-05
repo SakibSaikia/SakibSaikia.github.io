@@ -56,7 +56,7 @@ The above code can be condensed down to the following. I'll leave you to figure 
 ```C++
 bool IsNaN(float x)
 {
-    return (asuint(x) & 0x7fffff) > 0x7f800000;
+    return (asuint(x) & 0x7fffffff) > 0x7f800000;
 }
 ```
 
