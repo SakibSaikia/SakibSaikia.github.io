@@ -16,7 +16,7 @@ The following includes a few code snippets with explanation on how to check for 
 
 
 ```C++
-bool IsNan(float x)
+bool IsNaN(float x)
 {
     return !(x < 0.f || x > 0.f || x == 0.f);
 }
@@ -32,12 +32,15 @@ There is a single sign bit followed by a 8 bit exponent and a 23 bit mantissa or
 In this representation, a NaN is identified by a very specific bit pattern -- **an exponent which consists of all 1's and a mantissa whose value is non-zero**. 
 
 An exponent of all 1's is the bit pattern
-`0111 1111 1000 0000 0000 0000 0000 0000` or `0x7f800000` in hex. 
 
-Let's rewrite the Nan check to look for this.
+`0111 1111 1000 0000 0000 0000 0000 0000` 
+
+.. or `0x7f800000` in hex. 
+
+Let's rewrite the NaN check to look for this.
 
 ```C++
-bool IsNan(float x)
+bool IsNaN(float x)
 {
     // 1. Extract the bits in the float by interpreting it as an unsigned int
     // 2. Bitwise AND to isolate the exponent and right shift to erase the mantissa bits
