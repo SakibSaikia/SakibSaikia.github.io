@@ -15,3 +15,4 @@ So, I'm maintaining a list of Twitter handles and their corresponding Mastodon h
 * @aras_p --> @aras@mastodon.gamedev.place
 * @jeriellsworth --> @JeriEllsworth@mastodon.social
 * @sakibsaikia --> @thisarray@mastodon.gamedev.place
+* @sparsevoxel --> @sparsevoxel@mastodon.gamedev.place
