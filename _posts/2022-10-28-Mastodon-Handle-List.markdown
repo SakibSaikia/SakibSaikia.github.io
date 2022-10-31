@@ -19,6 +19,7 @@ So, I'm maintaining a list of Twitter handles and their corresponding Mastodon h
 * @meuns --> @meuns@mastodon.gamedev.place
 * @reedbeta --> @reedbeta@mastodon.gamedev.place
 * @sakibsaikia --> @thisarray@mastodon.gamedev.place
+* @sheredom --> @sheredom@mastodon.gamedev.place
 * @sparsevoxel --> @sparsevoxel@mastodon.gamedev.place
 * @tom_forsyth --> @TomF@mastodon.gamedev.place
 ```
