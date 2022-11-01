@@ -15,11 +15,15 @@ So, I'm maintaining a list of Twitter handles and their corresponding Mastodon h
 ```
 * @aras_p --> @aras@mastodon.gamedev.place
 * @doppioslash --> @doppioslash@mastodon.gamedev.place
+* @FlohOfWoe --> @floooh@mastodon.gamedev.place
 * @jeriellsworth --> @JeriEllsworth@mastodon.social
 * @meuns --> @meuns@mastodon.gamedev.place
+* @MissQuickstep --> @MissQuickstep@mastodon.gamedev.place
 * @reedbeta --> @reedbeta@mastodon.gamedev.place
+* @rfernandez@aus.social
 * @sakibsaikia --> @thisarray@mastodon.gamedev.place
 * @sheredom --> @sheredom@mastodon.gamedev.place
 * @sparsevoxel --> @sparsevoxel@mastodon.gamedev.place
+* @synulation --> @lentinic@mastodon.gamedev.place
 * @tom_forsyth --> @TomF@mastodon.gamedev.place
 ```
