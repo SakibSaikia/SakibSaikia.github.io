@@ -1,6 +1,6 @@
 ---
 layout: 	post
-title:  	"Let's Toot: Mastodon Handle List"
+title:  	"#TwitterMigration: Mastodon Handle List"
 date:   	2022-10-28 00:00:00 -0500
 category: 	"Social"
 published:	true
