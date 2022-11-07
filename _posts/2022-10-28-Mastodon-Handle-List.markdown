@@ -45,6 +45,7 @@ So, I'm maintaining a list of Twitter handles and their corresponding Mastodon h
 * @robcupisz --> @robcupisz@mastodon.gamedev.place
 * @ryszu --> @rys@mastodon.gamedev.place
 * @sakibsaikia --> @thisarray@mastodon.gamedev.place
+* @SebAaltonen --> @sebbbi@mastodon.gamedev.place
 * @self_shadow --> @self_shadow@mastodon.gamedev.place
 * @sheredom --> @sheredom@mastodon.gamedev.place
 * @SiNGUL4RiTY --> @razor@mastodon.gamedev.place
