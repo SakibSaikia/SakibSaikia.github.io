@@ -60,3 +60,5 @@ So, I'm maintaining a list of Twitter handles and their corresponding Mastodon h
 * @TonyAlbrecht --> @TonyAlbrecht@mastodon.gamedev.place
 * @voxel_tracer --> @voxel_tracer@mastodon.gamedev.place
 ```
+
+You can also browse all the profiles in the @mastodon.gamedev.place instance [here](https://mastodon.gamedev.place/explore).
