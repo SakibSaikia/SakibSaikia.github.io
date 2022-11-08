@@ -18,6 +18,7 @@ So, I'm maintaining a list of Twitter handles and their corresponding Mastodon h
 * @Alainxyz --> @alain@mastodon.gamedev.place
 * @andsz --> @ands@mastodon.gamedev.place
 * @aras_p --> @aras@mastodon.gamedev.place
+* @BelgianRenderer --> @gkaerts@mastodon.gamedev.place
 * @BrianKaris --> @BrianKaris@mastodon.gamedev.place
 * @doppioslash --> @doppioslash@mastodon.gamedev.place
 * @dougbinks --> @dougbinks@mastodon.gamedev.place
@@ -31,6 +32,7 @@ So, I'm maintaining a list of Twitter handles and their corresponding Mastodon h
 * @js_guay --> @skylark13@mastodon.gamedev.place
 * @kwalfridsson --> @kristerw@mastodon.gamedev.place
 * @levork --> @levork@mograph.social
+* @longbool --> @longbool@mastodon.gamedev.place
 * @meuns --> @meuns@mastodon.gamedev.place
 * @MissQuickstep --> @MissQuickstep@mastodon.gamedev.place
 * @nice_byte --> @nicebyte@mastodon.gamedev.place
