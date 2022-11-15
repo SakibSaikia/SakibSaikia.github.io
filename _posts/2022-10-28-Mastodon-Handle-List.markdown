@@ -15,6 +15,7 @@ So, I'm maintaining a list of Twitter handles and their corresponding Mastodon h
 ```
 * @_wusher --> @willgfx@mastodon.social
 * @0x4D4E53 --> @MehdiNS@mastodon.gamedev.place
+* @adamjmiles --> @ajmiles@mastodon.gamedev.place
 * @Alainxyz --> @alain@mastodon.gamedev.place
 * @andsz --> @ands@mastodon.gamedev.place
 * @aras_p --> @aras@mastodon.gamedev.place
@@ -36,10 +37,13 @@ So, I'm maintaining a list of Twitter handles and their corresponding Mastodon h
 * @longbool --> @longbool@mastodon.gamedev.place
 * @meuns --> @meuns@mastodon.gamedev.place
 * @MissQuickstep --> @MissQuickstep@mastodon.gamedev.place
+* @MyNameIsMJP --> @mjp@mastodon.gamedev.place
 * @nice_byte --> @nicebyte@mastodon.gamedev.place
 * @ocornut --> @ocornut@mastodon.gamedev.place
+* @Omme --> @omme@mastodon.gamedev.place
 * @P_Malin --> @p_malin@mastodon.gamedev.place
 * @pixprin --> @Pixprin@mastodon.social
+* @promit_roy --> @promit@mastodon.gamedev.place
 * @rapso --> @rapso@mastodon.gamedev.place
 * @reedbeta --> @reedbeta@mastodon.gamedev.place
 * @reinsteam --> @reinsteam@mastodon.gamedev.place
@@ -49,6 +53,7 @@ So, I'm maintaining a list of Twitter handles and their corresponding Mastodon h
 * @robcupisz --> @robcupisz@mastodon.gamedev.place
 * @ryszu --> @rys@mastodon.gamedev.place
 * @sakibsaikia --> @thisarray@mastodon.gamedev.place
+* @SaschaWillems2 --> @sascha@mastodon.gamedev.place
 * @SebAaltonen --> @sebbbi@mastodon.gamedev.place
 * @self_shadow --> @self_shadow@mastodon.gamedev.place
 * @sheredom --> @sheredom@mastodon.gamedev.place
@@ -59,6 +64,7 @@ So, I'm maintaining a list of Twitter handles and their corresponding Mastodon h
 * @tom_forsyth --> @TomF@mastodon.gamedev.place
 * @TonyAlbrecht --> @TonyAlbrecht@mastodon.gamedev.place
 * @voxel_tracer --> @voxel_tracer@mastodon.gamedev.place
+* @VrKomarov --> @VrKomarov@mastodon.gamedev.place
 ```
 
 You can also browse all the profiles in the @mastodon.gamedev.place instance [here](https://mastodon.gamedev.place/explore).
