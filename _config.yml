@@ -14,12 +14,11 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Sakib Saikia
-email: sakib.saikia@pm.me
 description: > # this means to ignore newlines until "baseurl:"
   Memory dump of all things related to graphics, GPUs, C++, gamedev. 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: sakibsaikia
+mastodon_username: "@thisarray"
 #github_username:  SakibSaikia
 
 # Google services
