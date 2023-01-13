@@ -59,6 +59,8 @@ Vector3 GetSunDirection(float t, int J, float l)
 }
 ```
 
+This is how it looks in action.
+
 <p align="center">
 <div class="embed-container">
   <iframe
