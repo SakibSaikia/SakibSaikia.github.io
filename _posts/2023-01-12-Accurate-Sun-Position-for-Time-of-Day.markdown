@@ -6,7 +6,7 @@ category: 	"Graphics"
 published:	true
 ---
 
-Time of Day systems simulate the movement of the sun across the sky. There are several challenges to implement such a system, but this post deals with the most fundamental of these - how to generate the sun position in the sky. While an accurate position is not required, it is fairly simple to generate and very satisfying. I came across this in ["A Practical Analytic Model for Dylight"](https://courses.cs.duke.edu/cps124/fall02/resources/p91-preetham.pdf) by Preetham et. al. and wanted to extract the relevant portion here for ease of discoverability.
+Time of Day systems simulate the movement of the sun across the sky. There are several challenges to implement such a system, but this post deals with the most fundamental of these - how to generate the sun position in the sky. While an accurate position is not required, it is fairly simple to generate and very satisfying. I came across this in ["A Practical Analytic Model for Daylight"](https://courses.cs.duke.edu/cps124/fall02/resources/p91-preetham.pdf) by Preetham et. al. and wanted to extract the relevant portion here for ease of discoverability.
 
 The three parameters that determine the position of the sun in the sky are:
 
